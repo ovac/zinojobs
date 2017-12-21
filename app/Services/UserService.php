@@ -10,7 +10,7 @@ use Session;
 use Exception;
 use App\Models\User;
 use App\Models\UserMeta;
-use App\Models\Team;
+
 use App\Models\Role;
 use App\Events\UserRegisteredEmail;
 use App\Notifications\ActivateUserEmail;
@@ -45,12 +45,12 @@ class UserService
     public function __construct(
         User $model,
         UserMeta $userMeta,
-        Team $team,
+        
         Role $role
     ) {
         $this->model = $model;
         $this->userMeta = $userMeta;
-        $this->team = $team;
+        
         $this->role = $role;
     }
 
@@ -249,7 +249,7 @@ class UserService
         try {
             return DB::transaction(function () use ($id) {
                 $this->unassignAllRoles($id);
-                $this->leaveAllTeams($id);
+                
 
                 $userMetaResult = $this->userMeta->where('user_id', $id)->delete();
                 $userResult = $this->model->find($id)->delete();

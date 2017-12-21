@@ -52,6 +52,12 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+		'quarx' => \App\Http\Middleware\Quarx::class,
+		'quarx-api' => \App\Http\Middleware\QuarxApi::class,
+		'quarx-analytics' => \Yab\Quarx\Middleware\QuarxAnalytics::class,
+		'quarx-language' => \App\Http\Middleware\QuarxLanguage::class,
+		'admin' => \App\Http\Middleware\Admin::class,
+		'active' => \App\Http\Middleware\Active::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

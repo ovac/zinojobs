@@ -24,6 +24,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+		\Gate::define('quarx', function ($user) {
+			return ($user->roles->first()->name === 'admin');
+		});
+		\Gate::define('admin', function ($user) {
+			return ($user->roles->first()->name === 'admin');
+		});
 		Gate::define('admin', function ($user) { return ($user->roles->first()->name === 'admin'); });
 		Gate::define('team-member', function ($user, $team) { return ($user->teams->find($team->id)); });
 

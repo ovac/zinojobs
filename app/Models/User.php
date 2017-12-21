@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Role;
-use App\Models\Team;
+
 use App\Models\UserMeta;
 use App\Notifications\ResetPassword;
 use Illuminate\Notifications\Notifiable;

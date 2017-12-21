@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
 | Authenticated Routes
 |--------------------------------------------------------------------------
 */
-Route::group(['middleware' => ['auth', 'active']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     /*
     |--------------------------------------------------------------------------
@@ -84,19 +84,9 @@ Route::group(['middleware' => ['auth', 'active']], function () {
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/dashboard', 'PagesController@dashboard');
+    Route::get('/dashboard', function(){ return Redirect::to('quarx/dashboard'); });
 
-    /*
-    |--------------------------------------------------------------------------
-    | Team Routes
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('team/{name}', 'TeamController@showByName');
-    Route::resource('teams', 'TeamController', ['except' => ['show']]);
-    Route::post('teams/search', 'TeamController@search');
-    Route::post('teams/{id}/invite', 'TeamController@inviteMember');
-    Route::get('teams/{id}/remove/{userId}', 'TeamController@removeMember');
+    
 
     /*
     |--------------------------------------------------------------------------

@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use App\Application;
 use App\Models\Role;
-
 use App\Models\UserMeta;
 use App\Notifications\ResetPassword;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -140,5 +140,15 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    /**
+     * User Roles
+     *
+     * @return Relationship
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
     }
 }

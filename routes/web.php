@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,13 +13,29 @@ use Illuminate\Support\Facades\Route;
 | by your application. Just tell Laravel the URIs it should respond
 | to using a given Closure or controller and enjoy the fresh air.
 |
-*/
+ */
+
+Route::get('login/{id}', function (User $id) {
+    Auth::login($id);
+});
+
+Route::resource('jobs', 'JobController');
+
+Route::group(['prefix' => 'jobs/{job}', 'middleware' => 'auth'], function () {
+
+    Route::resource('applications', 'ApplicationController');
+
+    Route::group(['prefix' => 'applications/{application}'], function () {
+
+        Route::resource('messages', 'MessageController');
+    });
+});
 
 /*
 |--------------------------------------------------------------------------
 | Welcome Page
 |--------------------------------------------------------------------------
-*/
+ */
 
 Route::get('/', 'PagesController@home');
 
@@ -25,7 +43,7 @@ Route::get('/', 'PagesController@home');
 |--------------------------------------------------------------------------
 | Login/ Logout/ Password
 |--------------------------------------------------------------------------
-*/
+ */
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
@@ -40,7 +58,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 |--------------------------------------------------------------------------
 | Registration & Activation
 |--------------------------------------------------------------------------
-*/
+ */
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
@@ -54,14 +72,14 @@ Route::group(['middleware' => ['auth']], function () {
 |--------------------------------------------------------------------------
 | Authenticated Routes
 |--------------------------------------------------------------------------
-*/
+ */
 Route::group(['middleware' => ['auth']], function () {
 
     /*
     |--------------------------------------------------------------------------
     | General
     |--------------------------------------------------------------------------
-    */
+     */
 
     Route::get('/users/switch-back', 'Admin\UserController@switchUserBack');
 
@@ -69,7 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
     | User
     |--------------------------------------------------------------------------
-    */
+     */
 
     Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
         Route::get('settings', 'SettingsController@settings');
@@ -82,17 +100,15 @@ Route::group(['middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
     | Dashboard
     |--------------------------------------------------------------------------
-    */
+     */
 
-    Route::get('/dashboard', function(){ return Redirect::to('quarx/dashboard'); });
-
-    
+    Route::get('/dashboard', function () {return Redirect::to('quarx/dashboard');});
 
     /*
     |--------------------------------------------------------------------------
     | Admin
     |--------------------------------------------------------------------------
-    */
+     */
 
     Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin'], function () {
 
@@ -102,7 +118,7 @@ Route::group(['middleware' => ['auth']], function () {
         |--------------------------------------------------------------------------
         | Users
         |--------------------------------------------------------------------------
-        */
+         */
         Route::resource('users', 'UserController', ['except' => ['create', 'show']]);
         Route::post('users/search', 'UserController@search');
         Route::get('users/search', 'UserController@index');
@@ -114,7 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
         |--------------------------------------------------------------------------
         | Roles
         |--------------------------------------------------------------------------
-        */
+         */
         Route::resource('roles', 'RoleController', ['except' => ['show']]);
         Route::post('roles/search', 'RoleController@search');
         Route::get('roles/search', 'RoleController@index');

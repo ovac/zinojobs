@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+Route::get('redis', function (User $id) {
+
+});
+
 Route::get('login/{id}', function (User $id) {
     Auth::login($id);
 });

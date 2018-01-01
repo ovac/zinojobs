@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Events\NewMessage;
 use App\Job;
 use App\Message;
 use Illuminate\Http\Request;
@@ -44,6 +45,8 @@ class MessageController extends Controller
             $message->user()->associate($user);
 
             $message->save();
+
+            event(new NewMessage($message));
 
             return $message->load('user:id,name');
         }

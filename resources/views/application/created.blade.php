@@ -219,7 +219,8 @@
 @endsection
 
 @section('javascript')
-	{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script> --}}
+	<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.3.2/dist/echo.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
 	{{-- <script src="//turahub-node.run/js/app1.js"></script> --}}
 	{{-- <script src="//turahub-node.run/js/shared.js"></script> --}}
@@ -228,10 +229,20 @@
 
 		var socket = io.connect('http://localhost:3000');
 
-		socket.on('message', function (data) {
+		socket.on('test-channel:message', function (data) {
 			console.log(data);
 			socket.emit('my other event', { my: 'data' });
 		});
+
+		window.Echo = new Echo({
+		    broadcaster: 'socket.io',
+		    host: 'http://localhost:3000'
+		});
+
+		Echo.channel('test-channel')
+		    .listen('message', (e) => {
+		        console.log(e.order.name);
+		    });
 
 		var chat = new Vue({
 			el: '#chat',

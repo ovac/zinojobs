@@ -46,9 +46,11 @@ class MessageController extends Controller
 
             $message->save();
 
+            $message->load('user:id,name');
+
             event(new NewMessage($message));
 
-            return $message->load('user:id,name');
+            return $message;
         }
 
         return response(401);

@@ -192,15 +192,6 @@
 
 		window.hash = '{{ Hash::make($application) .  Hash::make(time())}}';
 
-
-
-		window.peer = new Peer({
-			host: '{{ env('NODE_SERVER', 'localhost') }}',
-			port: {{ env('NODE_PORT', 3000) }},
-			path: '/peer',
-			secure: {{ env('NODE_SECURE', false) ? 1: 0 }}
-		});
-
 		var data = {
 			peerId: null,
 			errorMessage: null,
@@ -250,6 +241,13 @@
 
 				vm.fetchMessages();
 
+				window.peer = new Peer({
+					host: '{{ env('NODE_SERVER', 'localhost') }}',
+					port: {{ env('NODE_PORT', 3000) }},
+					path: '/peer',
+					secure: {{ env('NODE_SECURE', false) ? 1: 0 }}
+				});
+
 				// PeerJS object
 				peer.on('open', function(){ vm.peerId = peer.id; });
 
@@ -258,14 +256,19 @@
 			methods: {
 				runSetup: function(){
 					var vm = this;
-					navigator.getUserMedia({audio: true, video: true}, function(stream){
-					    // Set your video displays
-					    $('#my-video').prop('src', URL.createObjectURL(stream));
-					    window.localStream = stream;
-					    vm.prepareCall();
-					}, function(){
-						vm.showError('Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.')
-					});
+
+					if (vm.peerId) {
+						navigator.getUserMedia({audio: true, video: true}, function(stream){
+						    // Set your video displays
+						    $('#my-video').prop('src', URL.createObjectURL(stream));
+						    window.localStream = stream;
+						    vm.prepareCall();
+						}, function(){
+							vm.showError('Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.')
+						});
+					} else {
+						vm.showError('We were unable assign you a seat. Please reload this window and try again.');
+					}
 				},
 
 				showError: function(error){
@@ -296,7 +299,17 @@
 						$('#call').modal().modal('open');
 					} else {
 
-						$('#waitForEmployer').modal({ dismissible: false }).modal('open');
+						socket.emit('ready-for-video-interview:interview', {
+							applicationId: vm.applicationId,
+							applicantPeerId: vm.peerId
+						});
+
+						socket.on('ready-for-video-interview:response:{{ $application->id }}', function (data) {
+							if(data.applicationId == vm.applicationId){
+								$('#waitForEmployer').modal({ dismissible: false }).modal('open');
+							}
+						});
+
 					}
 			  	},
 

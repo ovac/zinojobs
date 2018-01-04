@@ -46,10 +46,7 @@
 		          <div class="chat-num-messages">Messages: @{{ messages.length }}</div>
 		        </div>
 		        <button class="right waves-effect btn waves-light" v-if="!existingCall"
-		        @click="call('{{
-					base64_encode(str_slug($application->id . $application->job_id. $application->job->company_id . $application->user_id))
-
-		         }}')">
+		        @click="call(applicantPeerId)">
 		        	<i class="fa fa-video"></i> Start Video Interview
 		        </button>
 
@@ -254,6 +251,7 @@
 			newMessage: null,
 			messages: [],
 			contacted: null,
+			applicantPeerId: null,
 
 			status: 'available'
 		};
@@ -329,6 +327,15 @@
 				  		$(".chat-history").animate({
 						    scrollTop: $(".all-messages").height()
 						}, 400);
+					}
+				});
+
+				socket.on('ready-for-video-interview:interview:{{ $application->id }}', function (data) {
+
+					if(data.applicationId == vm.applicationId){
+						socket.emit('ready-for-video-interview:response', data);
+						alert('Applicant is ready for video Interview');
+						vm.applicantPeerId = data.applicantPeerId;
 					}
 				});
 

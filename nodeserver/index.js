@@ -25,4 +25,13 @@ redis.on('message', function(channel, message) {
     io.emit(channel + ':' + message.event, message.data);
 });
 
+io.on('connection', function(socket){
+	socket.on('ready-for-video-interview:interview', function(data){
+		socket.broadcast.emit('ready-for-video-interview:interview:'+data.applicationId, data);
+	});
+	socket.on('ready-for-video-interview:response', function(data){
+		socket.broadcast.emit('ready-for-video-interview:response:'+data.applicationId, data);
+	});
+});
+
 app.use('/peer', ExpressPeerServer(server, { debug: true }));

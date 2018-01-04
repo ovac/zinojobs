@@ -73,11 +73,11 @@
 
 		    <div class="chat">
 		      <div class="chat-header clearfix">
-		        <img src="{{ $application->job->user->avatar }}" alt="avatar" />
+		        <img src="{{ $application->job->user->avatar }}" alt="avatar" height="100px"/>
 
 		        <div class="chat-about">
 		          <div class="chat-with">Chat with @{{ messages[0].user.name }}</div>
-		          <div class="chat-num-messages">already 1 902 messages</div>
+		          <div class="chat-num-messages">Messages: @{{ messages.length }}</div>
 		        </div>
 		        <button class="right waves-effect btn waves-light" v-if="!existingCall" @click="runSetup">
 		        	<i class="fa fa-video"></i> Prepared for Video Interview

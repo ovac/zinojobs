@@ -12,7 +12,11 @@ var io = require('socket.io')(server);
 
 var Redis = require('ioredis');
 
-var redis = new Redis();
+var redis = new Redis({
+	port: process.env.REDIS_PORT||6379,          // Redis port
+	host: process.env.REDIS_HOST||'127.0.0.1',   // Redis host
+	password: process.env.REDIS_PASSWORD||null,	 // Redis Passord
+});
 
 redis.subscribe('application-messages-channel');
 

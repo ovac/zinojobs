@@ -1,0 +1,22 @@
+{
+  "name": "zinojobs-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ioredis": "^3.2.2",
+    "peer": "^0.2.8",
+    "socket.io": "^2.0.4"
+  },
+  "now": {
+    "env": {
+      "REDIS_PORT": 17468,
+      "REDIS_HOST": "redis-17468.c13.us-east-1-3.ec2.cloud.redislabs.com"
+    }
+  }
+}

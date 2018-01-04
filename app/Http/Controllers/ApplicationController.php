@@ -17,7 +17,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = auth()->user()->applications()->where('qualified', true)->get();
+        $applications = auth()->user()->applications()->get()->where('qualified', true);
 
         return view('application.index', compact('applications'));
     }

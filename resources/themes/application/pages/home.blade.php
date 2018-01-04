@@ -43,9 +43,3 @@
         });
     </script> --}}
 @endsection
-{{--
-@section('quarx')
-    @if (isset($page))
-        @edit('pages', $page->id)
-    @endif
-@endsection --}}

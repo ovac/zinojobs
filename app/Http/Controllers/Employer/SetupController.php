@@ -57,7 +57,7 @@ class SetupController extends Controller
             $user->save();
         });
 
-        return redirect()->intended('/employer/jobs/post');
+        return redirect()->intended('/employer/jobs/create');
     }
 
     /**

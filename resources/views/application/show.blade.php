@@ -192,6 +192,17 @@
 
 		window.hash = '{{ Hash::make($application) .  Hash::make(time())}}';
 
+
+
+		window.peer = new Peer('{{
+			base64_encode(str_slug($application->id . $application->job_id. $application->job->company_id . $application->user_id))
+		}}', {
+			host: '{{ env('NODE_SERVER', 'localhost') }}',
+			port: {{ env('NODE_PORT', 3000) }},
+			path: '/peer',
+			secure: {{ env('NODE_SECURE', false) ? 1: 0 }}
+		});
+
 		var data = {
 			peerId: null,
 			errorMessage: null,
@@ -240,15 +251,6 @@
 				});
 
 				vm.fetchMessages();
-
-				window.peer = new Peer('{{
-					base64_encode(str_slug($application->id . $application->job_id. $application->job->company_id . $application->user_id))
-				}}', {
-					host: '{{ env('NODE_SERVER', 'localhost') }}',
-					port: {{ env('NODE_PORT', 3000) }},
-					path: '/peer',
-					secure: {{ env('NODE_SECURE', false) ? 1: 0 }}
-				});
 
 				// PeerJS object
 				peer.on('open', function(){ vm.peerId = peer.id; });

@@ -18,10 +18,10 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('industry');
             $table->string('address');
-            $table->integer('employees');
+            $table->string('employees');
             $table->text('details')->nullable();
             $table->text('mission')->nullable();
-            $table->timestamp('founded')->nullable();
+            $table->dateTime('founded')->nullable();
             $table->string('logo')->default('/images/no_img.jpg');
             $table->timestamps();
         });

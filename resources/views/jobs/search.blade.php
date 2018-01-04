@@ -1,19 +1,19 @@
-<div class="row blue lighten-5">
+<div class="row blue z-depth-2 lighten-5">
   <br>
   <form class="col s12" action="{{ url('/jobs') }}">
     <div class="row">
       <div class="input-field col s6">
         <i class="material-icons prefix">search</i>
-        <input id="icon_search" type="text" class="validate" name="keyword">
-        <label for="icon_search">Job Title, Name or Keyword</label>
+        <input id="icon_search" type="text" class="validate" name="search" value="{{ Request::query('search') }}">
+        <label for="icon_search">Job Title, Name, Company or Keyword</label>
       </div>
       <div class="input-field col s4">
         <i class="material-icons prefix">pin_drop</i>
-        <input id="icon_pin_drop" type="text" class="validate" name="location">
+        <input id="icon_pin_drop" type="text" class="validate" name="location" value="{{ Request::query('location') }}">
         <label for="icon_pin_drop">Location</label>
       </div>
       <div class="input-field col s2">
-          <button class="btn blue waves-effect waves-light right" type="submit" name="action">Search
+          <button class="btn blue waves-effect waves-light right" type="submit">Search
               <i class="material-icons right">search</i>
           </button>
       </div>

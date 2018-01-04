@@ -17,7 +17,9 @@
 	</div>
 
 		<div class="container">
-			<form mothod="/jobs/{{ $job->id }}/apply"  enctype="multipart/form-data">
+			<form method="POST" action="/jobs/{{ $job->id }}/applications"  enctype="multipart/form-data">
+                {!! csrf_field() !!}
+
 				<ul class="stepper linear">
 				   <li class="step active">
 
@@ -50,13 +52,30 @@
 				            <div class="file-field input-field">
 						      <div class="btn">
 						        <span>Select File</span>
-						        <input id="resume" name="resume" type="file" class="validate">
+						        <input id="attachment" name="attachments[]" type="file" class="validate" multiple>
 						      </div>
 						      <div class="file-path-wrapper">
 						        <input class="file-path validate" type="text">
 						      </div>
 						    </div>
 				         </div>
+				         <div class="row">
+					          <div class="input-field col s12">
+					            <textarea id="about" class="materialize-textarea" name="about" data-length="120"></textarea>
+					            <label for="about">Information about the attachment(s)</label>
+					          </div>
+					      </div>
+
+				         	<div class="row">
+					          <div class="col s12">
+					            <input type="checkbox" name="social" id="social" class="checkbox" checked>
+					            <label for="social">Attach my social accounts and contact information</label>
+					          </div>
+					      	</div>
+
+							<br>
+							<br>
+							<br>
 				         <div class="step-actions">
 				            <button class="waves-effect waves-dark btn next-step">CONTINUE</button>
 				            <button class="waves-effect waves-dark btn-flat previous-step">BACK</button>

@@ -5,7 +5,7 @@
       <br>
       <p class="range-field">
       	<span>Put your answer on a scale of 1 (Strongly Disagree or Less Likely) - 5 (Strongly Agree or Very Likely)</span>
-        	<input type="range" name="question_{{ $question->id }}" min="1" max="5" />
+        	<input type="range" name="question_{{ $question->id }}" min="1" max="5" required/>
       </p>
       <br>
   	@else

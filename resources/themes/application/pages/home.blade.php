@@ -13,7 +13,9 @@
     <br>
     <br>
     <div class="center">
-        <h1>{!! $page->title or 'Find a Job' !!}</h1>
+        <img src="/img/logo.png" class="logo-img" alt="ZinoJobs" >
+
+        <h2 class="blue-text">{!! $page->title or 'Find a job.' !!}</h2>
     </div>
 
     @if (isset($page))

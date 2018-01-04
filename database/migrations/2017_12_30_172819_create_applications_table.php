@@ -18,6 +18,9 @@ class CreateApplicationsTable extends Migration
             $table->string('resume');
             $table->integer('user_id');
             $table->integer('job_id');
+            $table->boolean('social')->default(true);
+            $table->boolean('qualified')->default(false);
+            $table->json('answers')->nullable();
             $table->timestamps();
         });
     }

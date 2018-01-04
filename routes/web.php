@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('redis', function (User $id) {
-
 });
 
 Route::get('login/{id}', function (User $id) {
@@ -25,6 +24,10 @@ Route::get('login/{id}', function (User $id) {
 
 Route::resource('jobs', 'JobController');
 
+Route::resource('account', 'AccountController');
+
+Route::resource('applications', 'ApplicationController');
+
 Route::group(['prefix' => 'jobs/{job}', 'middleware' => 'auth'], function () {
 
     Route::resource('applications', 'ApplicationController');
@@ -32,6 +35,28 @@ Route::group(['prefix' => 'jobs/{job}', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'applications/{application}'], function () {
 
         Route::resource('messages', 'MessageController');
+    });
+});
+
+Route::group(['prefix' => 'employer', 'namespace' => 'Employer'], function () {
+
+    Route::resource('setup', 'SetupController');
+});
+
+Route::group(['prefix' => 'employer', 'middleware' => ['auth', 'can-employ'], 'namespace' => 'Employer'], function () {
+
+    Route::resource('jobs', 'JobController');
+
+    Route::group(['prefix' => 'jobs/{job}', 'middleware' => 'auth'], function () {
+
+        Route::resource('applications', 'ApplicationController');
+
+        Route::group(['prefix' => 'applications/{application}'], function () {
+
+            Route::resource('messages', 'MessageController');
+
+            Route::resource('chat-schedule', 'ChatScheduleController');
+        });
     });
 });
 
@@ -106,7 +131,9 @@ Route::group(['middleware' => ['auth']], function () {
     |--------------------------------------------------------------------------
      */
 
-    Route::get('/dashboard', function () {return Redirect::to('quarx/dashboard');});
+    Route::get('/dashboard', function () {
+        return Redirect::to('quarx/dashboard');
+    });
 
     /*
     |--------------------------------------------------------------------------

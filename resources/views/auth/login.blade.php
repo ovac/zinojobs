@@ -1,41 +1,47 @@
-@extends('quarx-frontend::layout.master')
+@extends('auth.layout')
+@include('auth.partials.recaptcha')
+@section('form')
 
-@section('content')
+<div class="col s12 m6 offset-m3 valign">
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+    <div class="card-panel z-depth-4">
 
-            <h1 class="text-center">Login</h1>
 
-            <form method="POST" action="/login">
-                {!! csrf_field() !!}
-                <div class="col-md-12 form-group">
-                    <label>Email</label>
-                    <input class="form-control" type="email" name="email" value="{{ old('email') }}">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label>Password</label>
-                    <input class="form-control" type="password" name="password" id="password">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label>
-                        Remember Me <input type="checkbox" name="remember">
-                    </label>
-                </div>
-                <div class="col-md-12 form-group">
-                    <a class="btn btn-default pull-left" href="/password/reset">Forgot Password</a>
-                    <button class="btn btn-primary pull-right" type="submit">Login</button>
-                </div>
+      <span class="card-title text mtext chip">Don't have an account? <a href="/register">Create a free account</a> </span>
 
-                <div class="col-md-12 form-group">
-                    @if (Config::get('quarx.registration-available', false))
-                        <a class="btn raw100 btn-info" href="/register">Register</a>
-                    @endif
-                </div>
-            </form>
 
-        </div>
+      <div class="row">
+        <form class="col s12"  method="POST" action="{{ route('login') }}">
+                  {{ csrf_field() }}
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email" required value="{{ old('email') }}">
+              <label for="email">E-Mail Address</label>
+              @if ($errors->has('email'))
+                  <span class="new red badge left">{{ $errors->first('email') }}</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" name="password" required>
+              <label for="password">Pasword</label>
+              @if ($errors->has('password'))
+                  <span class="new red badge left">{{ $errors->first('password') }}</span>
+              @endif
+            </div>
+          </div>
+
+           @yield('recaptcha')
+
+          <div class="chip">
+            <a href="password/reset">Forgot your password?</a>
+          </div>
+          <button type="submit" class="btn right waves-effect waves-light blue"><i class="material-icons right">send</i> Login</button>
+        </form>
+      </div>
     </div>
-
-@stop
-
+</div>
+@endsection

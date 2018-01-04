@@ -2,12 +2,24 @@
 
 namespace App;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
 
+    protected $fillable = [
+        'title',
+        'description',
+        'salary',
+        'location',
+        'closing',
+        'qualification',
+    ];
+
     protected $appends = ['applied'];
+
+    protected $dates = ['closing'];
 
     public function getAppliedAttribute($model)
     {
@@ -16,6 +28,16 @@ class Job extends Model
         }
 
         return false;
+    }
+
+    public function poster()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function awardedTo()
+    {
+        return $this->belongsTo(User::class, 'id', 'awarded_to');
     }
 
     public function company()
@@ -31,5 +53,10 @@ class Job extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

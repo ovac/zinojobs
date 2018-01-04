@@ -1,36 +1,52 @@
-@extends('quarx-frontend::layout.master')
+@extends('auth.layout')
+@include('auth.partials.recaptcha')
+@section('form')
 
-@section('content')
+<div class="col s12 m6 offset-m3 valign">
 
-    <div class="row raw-margin-top-72">
-        <div class="col-md-4 col-md-offset-4">
+    <div class="card-panel z-depth-4 panel panel-default">
+                <div class="panel-heading">Reset Password</div>
 
-            <h1 class="text-center">Password Reset</h1>
 
-            <form method="POST" action="/password/reset">
-                {!! csrf_field() !!}
-                <input type="hidden" name="token" value="{{ $token }}">
+      <div class="row">
+        <form class="col s12"  method="POST" action="{{ route('password.request') }}">
+            {{ csrf_field() }}
 
-                @include('partials.errors')
-                @include('partials.status')
+            <input type="hidden" name="token" value="{{ $token }}">
 
-                <div class="col-md-12 form-group">
-                    <label>Email</label>
-                    <input class="form-control" type="email" name="email" value="{{ old('email') }}">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label>Password</label>
-                    <input class="form-control" type="password" name="password">
-                </div>
-                <div class="col-md-12 form-group">
-                    <label>Confirm Password</label>
-                    <input class="form-control" type="password" name="password_confirmation">
-                </div>
-                <div class="col-md-12 form-group">
-                    <button class="btn btn-primary" type="submit">Reset Password</button>
-                </div>
-            </form>
-        </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email" required value="{{ old('email') }}">
+              <label for="email">E-Mail Address</label>
+              @if ($errors->has('email'))
+                  <span class="new red badge left">{{ $errors->first('email') }}</span>
+              @endif
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="password" type="password" class="validate" name="password" required>
+              <label for="password">Pasword</label>
+              @if ($errors->has('password'))
+                  <span class="new red badge left">{{ $errors->first('password') }}</span>
+              @endif
+            </div>
+
+            <div class="input-field col s6">
+              <input id="password_confirmation" type="password" class="validate" name="password_confirmation" required>
+              <label for="password_conf">Confirm Pasword</label>
+              @if ($errors->has('password_conf'))
+                  <span class="new red badge left">{{ $errors->first('password_conf') }}</span>
+              @endif
+            </div>
+          </div>
+
+           @yield('recaptcha')
+
+          <button type="submit" class="btn right waves-effect waves-light blue"><i class="material-icons right">send</i> Reset password</button>
+        </form>
+      </div>
     </div>
-
-@stop
+</div>
+@endsection

@@ -1,51 +1,87 @@
 @extends('quarx-frontend::layout.master')
 
 @section('content')
-<div>
 
-		<div class="container-fluid" id="application">
-			<nav class="top-nav blue-grey darken-3">
-		        <div class="container">
-		          <div class="nav-wrapper"><a style="font-size: 15pt" class="page-title">Applying For: {{ $job->title }}</a></div>
-		        </div>
-		    </nav>
-			<nav class="top-nav  blue-grey darken-4">
-		        <div class="container">
-		          <div class="nav-wrapper "><a style="font-size: 15pt" class="page-title">At: {{ $job->company->name }}</a></div>
-		        </div>
-		    </nav>
-		</div>
+<div class="container-fluid" id="application">
+	<nav class="top-nav blue-grey darken-3">
+        <div class="container">
+          <div class="nav-wrapper"><a style="font-size: 15pt" class="page-title">Applying For: {{ $job->title }}</a></div>
+        </div>
+    </nav>
+	<nav class="top-nav  blue-grey darken-4">
+        <div class="container">
+          <div class="nav-wrapper "><a style="font-size: 15pt" class="page-title">At: {{ $job->company->name }}</a></div>
+        </div>
+    </nav>
+</div>
 
-		<div class="container z-depth-5 white"  style="padding: 2em 0px; font-size: 3em;">
+<div id="loader" class="container">
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="progress" v-if="loading">
+	    <div class="indeterminate"></div>
+	</div>
+</div>
+
+<div style="display: none;" id="main">
+
+		<div class="container z-depth-5 white"  style="padding: 2em 0px; " id="status">
 			<div class="container">
-				<blockquote>
+				<blockquote style="font-size: 3em;">
 					<p>You applied for this job. </p>
 
-					{{-- <p>After a manual review, someone from {{ $job->company->name }} will get back to you.</p> --}}
-					{{-- <p>Based on your entry, you did not qualify for this job.</p> --}}
-					{{-- <div>The job has been awarded to another applicant.</div> --}}
+					@if ($application->qualified)
+						<p v-if="!contacted && status != 'lost'">After a manual review, someone from {{ $job->company->name }} will get back to you.</p>
+
+						<p v-if="status == 'lost'">The job has been awarded to another applicant.</p>
+
+						<div v-if="status == 'invited'">
+							<p class="green-text">Congratulations.</p>
+							<p>You have been invited for a face to face interview.</p>
+						</div>
+
+						<p v-if="status == 'awarded'">Congratulations. You got the Job.</p>
+					@else
+						<p>Based on your entry, you did not qualify for this job.</p>
+					@endif
 					{{-- <div>This job is no longer available.</div> --}}
 			    </blockquote>
+
+
+				<div v-if="status == 'invited'">
+					<p>Date: 24th June, 2017</p>
+					<p>Time: 12:30pm</p>
+					<p>Address: 15, someething somewhere somehow</p>
+
+					<iframe width="100%" height="400" frameborder="0" style="border:0"
+						src="https://www.google.com/maps/embed/v1/place?
+						q=place_id:EiAyMiBXaGl0bWFuIFJkLCBMb25kb24gRTMgNFJCLCBVSw
+						&key={{ env('GOOGLE_MAP_KEY') }}"
+						allowfullscreen>
+					</iframe>
+				</div>
 		    </div>
 		</div>
 
 		<br>
 		<br>
 
-		<div class="clearfix container z-depth-5 white teal" id="chat">
+		<div class="clearfix container z-depth-5 white" id="chat" v-if="contacted">
 
 
 		    <div class="chat">
 		      <div class="chat-header clearfix">
-		        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
+		        <img src="{{ $application->job->user->avatar }}" alt="avatar" />
 
 		        <div class="chat-about">
-		          <div class="chat-with">Chat with Vincent Porter</div>
+		          <div class="chat-with">Chat with @{{ messages[0].user.name }}</div>
 		          <div class="chat-num-messages">already 1 902 messages</div>
 		        </div>
-		        <a class="right waves-effect btn waves-light" v-if="!existingCall" @click="runSetup" href="#">
+		        <button class="right waves-effect btn waves-light" v-if="!existingCall" @click="runSetup">
 		        	<i class="fa fa-video"></i> Prepared for Video Interview
-		        </a>
+		        </button>
 
 		        <a class="right waves-effect btn btn-large orange pulse" v-if="existingCall" @click="runSetup" href="#" >
 		        	<i class="fa fa-video"></i> Resume Video Interview
@@ -59,7 +95,7 @@
 		          <li v-for="message in messages" v-bind:class="{ 'clearfix': message.user.id == userId }">
 		            <div class="message-data" v-bind:class="{ 'align-right': message.user.id == userId }">
 		              <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
-		              <span class="message-data-name" >@{{ message.user.id == userId ? 'Victor Ariama': 'Vincent' }}</span> <i class="fa fa-circle me"></i>
+		              <span class="message-data-name" >@{{ message.user.name }}</span> <i class="fa fa-circle me"></i>
 		            </div>
 		            <div class="message"
 		            	v-bind:class="{
@@ -73,7 +109,7 @@
 
 		          <li>
 		            <div class="message-data">
-		              <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+		              <span class="message-data-name"><i class="fa fa-circle online"></i> @{{ messages[0].user.name }}</span>
 		              {{-- <span class="message-data-time">@{{ message.created_at }}</span> --}}
 		            </div>
 		            <i class="fa fa-circle online"></i>
@@ -91,7 +127,7 @@
 		        <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
 		        <i class="fa fa-file-image-o"></i>
 
-		        <button>Send</button>
+		        <button class="btn blue white-text" @click="sendMessage(newMessage)">Send</button>
 
 		      </div> <!-- end chat-message -->
 
@@ -140,80 +176,10 @@
 
 		</div> <!-- end container -->
 
-		<br>
-		<br>
-		<div class="container z-depth-5 white center" style="padding: 3em 0px;">
-			<div>
-			    <span style="font-size:2em;">
-			    	<u class="text-center">Attachments</u>
-			    </span>
-			</div>
 
-			<div class="container">
-				@foreach (['are you a man?', 'do you love dogs?', 'yave you done your nysc'] as $question)
-					<br>
-					<a href="" class="btn blue waves-effect"><i class="material-icons">grade</i> Resume - Download </a>
-					<br>
-				@endforeach
-			</div>
-		</div>
-
-		<br>
-		<br>
-		<div class="container z-depth-5 white center" style="padding: 3em 0px;">
-			<div>
-			    <span style="font-size:2em;">
-			    	<u class="text-center">Screening Questions</u>
-			    </span>
-			</div>
-
-
-			<div class="container">
-				<div class="collection">
-					@foreach ($job->questions as $question)
-		         		@if($question->requirement)
-							<div class="collection-item">
-								<span>Queston No. {{ $question->id }}</span>
-								<br>
-								<span>{{ $question->question }}</span>
-								<br>
-								<span>Answer: {{ $question->question }}</span>
-							</div>
-		         		@endif
-		         	@endforeach
-				</div>
-			</div>
-		</div>
-
-		<br>
-		<br>
-		<div class="container z-depth-5 white center" style="padding: 3em 0px;">
-			<div>
-			    <span style="font-size:2em;">
-			    	<u class="text-center">Questionnaire</u>
-			    </span>
-			</div>
-
-			<div class="container">
-				<div class="collection">
-					@foreach ($job->questions as $question)
-		         		@unless($question->requirement)
-							<div class="collection-item">
-								<span>Queston No. {{ $question->id }}</span>
-								<br>
-								<span>{{ $question->question }}</span>
-								<br>
-								<span>Answer: {{ $question->question }}</span>
-							</div>
-		         		@endif
-		         	@endforeach
-				</div>
-			</div>
-		</div>
-
-
-		<br>
-		<br>
+		@include('application.attachments', compact('application'))
+		@include('application.answers', compact('application'))
+		@include('application.social', compact('application'))
 </div>
 
 @endsection
@@ -224,18 +190,34 @@
 
 	<script type="text/javascript">
 
+		window.hash = '{{ Hash::make($application) .  Hash::make(time())}}';
+
+		var data = {
+			peerId: null,
+			errorMessage: null,
+			existingCall: null,
+			userId: {{ auth()->user()->id }},
+			userName: '{{ auth()->user()->name }}',
+			applicationId: {{ $application->id }},
+			newMessage: null,
+			messages: [],
+			contacted: null,
+
+			status: 'available'
+		};
+
+		var application = new Vue({
+			el: '#application'
+		});
+
+		var status = new Vue({
+			el: '#status',
+			data : data
+		});
+
 		var chat = new Vue({
 			el: '#chat',
-			data : {
-				peerId: null,
-				errorMessage: null,
-				existingCall: null,
-				userId: {{ auth()->user()->id }},
-				userName: '{{ auth()->user()->name }}',
-				applicationId: {{ $application->id }},
-				newMessage: null,
-				messages: [],
-			},
+			data : data,
 			mounted: function(){
 				navigator.getUserMedia =
 				navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -259,7 +241,9 @@
 
 				vm.fetchMessages();
 
-				window.peer = new Peer({{ auth()->user()->id }}, {
+				window.peer = new Peer('{{
+					base64_encode(str_slug($application->id . $application->job_id. $application->job->company_id . $application->user_id))
+				}}', {
 					host: '{{ env('NODE_SERVER', 'localhost') }}',
 					port: {{ env('NODE_PORT', 3000) }},
 					path: '/peer',
@@ -269,8 +253,7 @@
 				// PeerJS object
 				peer.on('open', function(){ vm.peerId = peer.id; });
 
-		    	$('#errorMessage, #call').modal();
-		    	$('#waitForEmployer').modal({ dismissible: false });
+				$('#errorMessage, #call, #waitForEmployer').modal();
 			},
 			methods: {
 				runSetup: function(){
@@ -287,7 +270,7 @@
 
 				showError: function(error){
 					this.errorMessage = error;
-					$('#errorMessage').modal('open');
+					$('#errorMessage').modal().modal('open');
 				},
 
 			  	prepareCall: function(){
@@ -299,7 +282,7 @@
 						call.answer(window.localStream);
 						vm.streamCall(call);
 
-						$('#call').modal('open');
+						$('#call').modal().modal('open');
 						$('#waitForEmployer').modal('close');
 
 					});
@@ -310,9 +293,10 @@
 					});
 
 					if (vm.existingCall) {
-						$('#call').modal('open');
+						$('#call').modal().modal('open');
 					} else {
-						$('#waitForEmployer').modal('open');
+
+						$('#waitForEmployer').modal({ dismissible: false }).modal('open');
 					}
 			  	},
 
@@ -349,26 +333,22 @@
 			  		var vm = this;
 
 			  		$.get((window.location + '').replace(/\#?\!?\/?$/, "") + '/messages', function(messages){
+
+			  			$('#main').fadeIn(function(){
+			  				$('#loader').hide();
+			  			});
+
 			  			vm.messages = messages;
+
+			  			if(vm.messages.length){
+			  				vm.contacted = true;
+			  			}
+
 			  			setTimeout(function(){
 			  				$(".chat-history").animate({ scrollTop: $(".all-messages").height() }, 400);
 			            }, 1000);
 			  		});
 			  	}
-			}
-		});
-
-		var application = new Vue({
-			el: '#application',
-
-			data : {
-				tab: 1
-			},
-
-			methods: {
-				setTab: function(tabId){
-					this.tab = tabId;
-			  	},
 			}
 		});
 	</script>

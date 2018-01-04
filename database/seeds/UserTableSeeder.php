@@ -20,10 +20,15 @@ class UserTableSeeder extends Seeder
                 'name' => 'Admin',
                 'email' => 'admin@example.com',
                 'password' => bcrypt('admin'),
+                'phone' => '0553577261',
             ]);
 
             $service->create($user, 'admin', 'admin', false);
         }
+
+        factory(App\Models\User::class, 100)->create()->each(function ($user) use ($service) {
+            $service->create($user, 'dummy', 'member', false);
+        });
 
     }
 }

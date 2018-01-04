@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Job;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -12,9 +13,32 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $jobs = Job::paginate(6);
+        $jobs =
+
+        Job::
+
+            where(function ($query)
+             use ($request) {
+                $query->where('title', 'LIKE', "%{$request->search}%")
+                    ->orWhereHas('company',
+                        function ($query) use ($request) {
+                            $query->where('name', 'LIKE', "%{$request->search}%");
+                        });
+            })->
+
+            where(function ($query)
+             use ($request) {
+                $query->where('location', 'LIKE', "%{$request->location}%")
+                    ->orWhereHas('company', function ($query) use ($request) {
+                        $query->where('address', 'LIKE', "%{$request->location}%");
+                    });
+            })->
+
+            whereDate('closing', '>', Carbon::now()->toDateTimeString())->
+
+            paginate(6);
 
         return view('jobs.index', compact('jobs'));
     }

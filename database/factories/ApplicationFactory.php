@@ -7,5 +7,7 @@ $factory->define(App\Application::class, function (Faker $faker) {
         'resume' => 'https://uptowork.com/mycv/ovac4u',
         'user_id' => rand(1, 100),
         'job_id' => rand(1, 100),
+        'qualified' => rand(0, 1),
+        'social' => rand(0, 1),
     ];
 });

@@ -12,6 +12,15 @@ $factory->define(App\Question::class, function (Faker $faker) {
             'range',
             'objective',
         ]),
+        'answer' => array_random([
+            'true',
+            'false',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+        ]),
         'question' => array_random([
             'Can you work under pressure?',
             'Do you work well under pressure?',

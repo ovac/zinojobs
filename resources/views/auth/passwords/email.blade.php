@@ -1,27 +1,41 @@
-@extends('quarx-frontend::layout.master')
+@extends('auth.layout')
+@include('auth.partials.recaptcha')
+@section('form')
 
-@section('content')
+<div class="col s12 m6 offset-m3 valign">
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
-            <h1 class="text-center">Forgot Password</h1>
+    <div class="card-panel z-depth-4 panel panel-default">
+                <div class="panel-heading">Reset Password</div>
 
-            <form method="POST" action="/password/email">
-                {!! csrf_field() !!}
-                @include('partials.errors')
-                @include('partials.status')
-                <div class="col-md-12 pull-left">
-                    <label>Email</label>
-                    <input class="form-control" type="email" name="email" placeholder="Email Address" value="{{ old('email') }}">
-                </div>
-                <div class="col-md-12 pull-left form-group">
-                    <a class="btn btn-default pull-left" href="/login">Wait I remember!</a>
-                    <button class="btn btn-primary pull-right" type="submit" class="button">Send Password Reset Link</button>
-                </div>
-            </form>
+                <div class="panel-body">
+      <span class="card-title text mtext chip">Try to <a href="/login">Sign In</a> or <a href="/register">Create a free account</a> </span>
 
-        </div>
+
+      <div class="row">
+        <form class="col s12"  method="POST" action="{{ route('password.email') }}">
+                  {{ csrf_field() }}
+
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate" name="email" required value="{{ old('email') }}">
+              <label for="email">E-Mail Address</label>
+              @if ($errors->has('email'))
+                  <span class="new red badge left">{{ $errors->first('email') }}</span>
+              @endif
+            </div>
+          </div>
+
+           @yield('recaptcha')
+
+          <button type="submit" class="btn right waves-effect waves-light blue"><i class="material-icons right">send</i> Send Password Reset Link</button>
+        </form>
+      </div>
     </div>
-
-@stop
+</div></div>
+@endsection

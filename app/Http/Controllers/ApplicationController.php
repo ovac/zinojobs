@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Application;
+use App\Attachment;
 use App\Job;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApplicationController extends Controller
 {
@@ -15,7 +17,9 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        //
+        $applications = auth()->user()->applications()->where('qualified', true)->get();
+
+        return view('application.index', compact('applications'));
     }
 
     /**
@@ -39,9 +43,65 @@ class ApplicationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Job $job, Request $request)
     {
-        //
+        DB::transaction(function () use ($job, $request) {
+
+            $application = new Application;
+
+            $application->job()->associate($job);
+            $application->user()->associate($request->user());
+            $application->resume = 'noresume';
+
+            $application->save();
+
+            foreach ($request->attachments ?: [] as $document) {
+                $attachment = new Attachment;
+
+                $attachment->url = $document->store('attachments', 'public');
+                $attachment->name = $document->getClientOriginalName();
+                $attachment->application()->associate($application);
+                $attachment->user()->associate($request->user());
+
+                $attachment->save();
+            }
+
+            if (empty($request->resume)) {
+                $application->resume = auth()->user()->resume
+                ?: 'noresume' //REMOVE THIS IN PRODUCTION
+                ;
+            } else {
+                $resume = new Attachment;
+
+                $resume->url = $application->resume = $request->resume->store('attachments', 'public');
+                $resume->name = 'Main Resume';
+
+                $resume->application()->associate($application);
+                $resume->user()->associate($request->user());
+
+                $resume->save();
+            }
+
+            (function () use ($job, $application, $request) {
+                $answers = [];
+
+                foreach ($job->questions ?: [] as $question) {
+                    $answer = [];
+                    $answer['question_id'] = $question->id;
+                    $answer['question'] = $question->question;
+                    $answer['requirement'] = $question->requirement;
+                    $answer['answer'] = $request->input('question_' . $question->id);
+
+                    $answers[] = $answer;
+                }
+
+                $application->answers = json_encode($answers);
+            })();
+
+            $application->save();
+        });
+
+        return redirect()->back();
     }
 
     /**
@@ -52,7 +112,7 @@ class ApplicationController extends Controller
      */
     public function show(Job $job, Application $application)
     {
-        return view('application.created', compact('job', 'application'));
+        return view('application.show', compact('job', 'application'));
     }
 
     /**

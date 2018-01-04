@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Application;
+use App\Company;
 use App\Models\Role;
 use App\Models\UserMeta;
 use App\Notifications\ResetPassword;
+use App\Social;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -150,5 +152,26 @@ class User extends Authenticatable
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function social()
+    {
+        return $this->hasOne(Social::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+
+            $model->social()->save(new Social);
+
+        });
     }
 }

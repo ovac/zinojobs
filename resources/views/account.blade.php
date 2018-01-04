@@ -3,13 +3,10 @@
 @section('content')
 	<br>
 	<br>
-	<div class="container z-depth-2" style="padding: 50px;">
-	    <form class="col s12" action="/user/logout" method="POST">
-	    	{!! csrf_field() !!}
-			<div class="center">
-			    <button type="submit" class="btn red ">Logout</button>
-			</div>
-	    </form>
+	<div class="container z-depth-2" style="padding: 20px;">
+		<div class="center">
+		    <a href="/logout" type="submit" class="btn red ">Logout</a>
+		</div>
 	</div>
 	<br>
 	<br>
@@ -18,14 +15,14 @@
 			<img src="{{ $user->avatar }}" height="200px">
 		</div>
 
-	    <form class="col s12" action="/account/avatar" method="POST">
+	    <form class="col s12" action="/account/avatar" method="POST" enctype="multipart/form-data">
 	    	{!! csrf_field() !!}
-	    	<input type="hidden" name="method" value="PATCH">
+	    	<input type="hidden" name="_method" value="PATCH">
 	    	<legend>Update Profile Picture</legend>
 	        <div class="file-field input-field">
 		      <div class="small btn">
 		        <span>File</span>
-		        <input type="file">
+		        <input type="file" name="avatar">
 		      </div>
 		      <div class="file-path-wrapper">
 		        <input class="file-path validate" type="text">
@@ -43,22 +40,22 @@
 		<div class="row">
 		    <form class="col s12" action="/account/profile" method="POST">
 		    	{!! csrf_field() !!}
-		    	<input type="hidden" name="method" value="PATCH">
+		    	<input type="hidden" name="_method" value="PATCH">
 		    	<legend>Profile Settings</legend>
 		    	<div class="row">
 			        <div class="input-field col s12">
-			          <input id="name" type="text" class="validate" value="{{ $user->name }}">
+			          <input id="name" type="text" class="validate" value="{{ $user->name }}" name="name">
 			          <label for="name">Full Name</label>
 			        </div>
 		    	</div>
 
 			    <div class="row">
 			        <div class="input-field col s6">
-			          <input id="email" type="tel" class="validate" value="{{ $user->phone }}">
-			          <label for="email">Phone</label>
+			          <input id="phone" type="tel" class="validate" value="{{ $user->phone }}" name="phone">
+			          <label for="phone">Phone</label>
 			        </div>
 			        <div class="input-field col s6">
-			          <input id="phone" type="email" class="validate" value="{{ $user->email }}">
+			          <input id="email" type="email" class="validate" value="{{ $user->email }}" name="email">
 			          <label for="email">Email</label>
 			        </div>
 			    </div>
@@ -78,7 +75,7 @@
 
 	    <form class="col s12" action="/account/resume" method="POST">
 	    	{!! csrf_field() !!}
-	    	<input type="hidden" name="method" value="PATCH">
+	    	<input type="hidden" name="_method" value="PATCH">
 	    	<legend>Update Default Resume/CV</legend>
 	        <div class="file-field input-field">
 		      <div class="small btn">
@@ -99,7 +96,7 @@
 	<div class="container z-depth-2" style="padding: 50px;">
 		    <form class="col s12" action="/account/password" method="POST">
 		    	{!! csrf_field() !!}
-		    	<input type="hidden" name="method" value="PATCH">
+		    	<input type="hidden" name="_method" value="PATCH">
 		    	<legend>Change Password</legend>
 			      <div class="row">
 			        <div class="input-field col s12 m4">

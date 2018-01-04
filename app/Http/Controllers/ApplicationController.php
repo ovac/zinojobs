@@ -99,6 +99,14 @@ class ApplicationController extends Controller
             })();
 
             $application->save();
+
+            if ($application->qualified) {
+
+                return Flash::make()
+                    ->titleAs('You qualified.')
+                    ->withMessage('The employer will be in touch.')
+                    ->createFlash('success');
+            }
         });
 
         return redirect()->back();

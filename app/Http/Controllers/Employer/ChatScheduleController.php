@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employer;
 use App\Application;
 use App\Events\NewMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Flash;
 use App\Job;
 use App\Message;
 use Illuminate\Http\Request;
@@ -54,6 +55,10 @@ class ChatScheduleController extends Controller
             $message->load('user:id,name');
 
             event(new NewMessage($message));
+
+            return Flash::make()
+                ->titleAs('Schedule created.')
+                ->createFlash('success');
 
             return redirect()->back();
         }

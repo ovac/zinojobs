@@ -21,6 +21,8 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" type="text/css" href="/css/sweetalert2.css">
+
 
         {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}"> --}}
 
@@ -33,7 +35,6 @@
     </head>
 
     <body>
-
         @theme('partials.navigation')
 
         <div class="site-wrapper @if(Request::is('/')) homepage @endif">
@@ -60,6 +61,7 @@
     </script>
     @yield("pre-javascript")
     <script type="text/javascript" src="/js/app.js"></script>
+    <script type="text/javascript" src="/js/sweetalert2.js"></script>
 
 
     <script type="text/javascript">
@@ -82,4 +84,6 @@
         );
     </script>
     @yield('javascript')
+    @include('flash')
+
 </html>

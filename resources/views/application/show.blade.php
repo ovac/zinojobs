@@ -194,9 +194,7 @@
 
 
 
-		window.peer = new Peer('{{
-			base64_encode(str_slug($application->id . $application->job_id. $application->job->company_id . $application->user_id))
-		}}', {
+		window.peer = new Peer({
 			host: '{{ env('NODE_SERVER', 'localhost') }}',
 			port: {{ env('NODE_PORT', 3000) }},
 			path: '/peer',

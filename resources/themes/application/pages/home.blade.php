@@ -28,7 +28,7 @@
 @endsection
 
 @section('javascript')
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDRjU9acDWs6tirlVTPhbFw8bDtYpIw6bI&sensor=false&libraries=places&dummy=.js"></script>
+    {{-- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDRjU9acDWs6tirlVTPhbFw8bDtYpIw6bI&sensor=false&libraries=places&dummy=.js"></script>
     <script>
         $(document).ready(function() {
 
@@ -41,7 +41,7 @@
 
             new google.maps.places.Autocomplete(input, options);
         });
-    </script>
+    </script> --}}
 @endsection
 {{--
 @section('quarx')

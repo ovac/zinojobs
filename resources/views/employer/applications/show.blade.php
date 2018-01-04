@@ -356,14 +356,24 @@
 			methods: {
 				call: function(peerId){
 					var vm = this;
-					navigator.getUserMedia({audio: true, video: true}, function(stream){
-					    // Set your video displays
-					    $('#my-video').prop('src', URL.createObjectURL(stream));
-					    window.localStream = stream;
-					    vm.prepareCall(peerId);
-					}, function(){
-						vm.showError('Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.')
-					});
+
+					if (peerId && vm.peerId) {
+						navigator.getUserMedia({audio: true, video: true}, function(stream){
+						    // Set your video displays
+						    $('#my-video').prop('src', URL.createObjectURL(stream));
+						    window.localStream = stream;
+						    vm.prepareCall(peerId);
+						}, function(){
+							vm.showError('Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.')
+						});
+					}
+					else if(!peerId){
+						vm.showError('The applicant is not ready. Ask the applicant to click on *READY FOR VIDEO INTERVIEW*.')
+					}
+					else {
+						vm.showError('Unable to reach server. Please reload this window.');
+					}
+
 				},
 
 				showError: function(error){

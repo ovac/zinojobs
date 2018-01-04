@@ -309,7 +309,6 @@
 								$('#waitForEmployer').modal({ dismissible: false }).modal('open');
 							}
 						});
-
 					}
 			  	},
 

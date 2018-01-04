@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UserTableSeeder::class);
 
-        // factory(App\Models\User::class, 100)->create();
-        factory(App\Job::class, 1000)->create();
-        factory(App\Company::class, 1000)->create();
-        factory(App\Application::class, 1000)->create();
-        factory(App\Question::class, 1000)->create();
-        factory(App\Message::class, 1000)->create();
-        factory(App\Invitation::class, 300)->create();
+        if (app('env') === 'local' || app('env') === 'staging') {
+            // factory(App\Models\User::class, 100)->create();
+            factory(App\Job::class, 1000)->create();
+            factory(App\Company::class, 1000)->create();
+            factory(App\Application::class, 1000)->create();
+            factory(App\Question::class, 1000)->create();
+            factory(App\Message::class, 1000)->create();
+            factory(App\Invitation::class, 300)->create();
+        }
 
         Model::reguard();
     }

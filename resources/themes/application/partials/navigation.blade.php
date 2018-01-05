@@ -2,7 +2,7 @@
     <nav>
         <a href="#" data-activates="mobile-demo" class="button-collapse right"><i class="material-icons">menu</i></a>
 
-        <div class="nav-wrapper blue">
+        <div class="nav-wrapper blue {{ Auth::check() && \Request::user()->company ? 'darken-4': '' }}">
           <div class="col s12">
             <a href="/" class="brand-logo hide-on-med-and-down"><img src="/img/logo.png" class="logo-img" alt="" height="64px"></a>
             <a href="/" class="brand-logo" style="left:100px;">
@@ -33,12 +33,12 @@
                                 <li><a class="link" href="{{ url('applications') }}">Applicaitons</a></li>
                             </ul>
                         @else
-                            <li><a class="dropdown-button" href="#!" data-activates="employer_dropdown">Employer<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a class="dropdown-button" href="#!" data-activates="employer_dropdown">I'm an Employer<i class="material-icons right">arrow_drop_down</i></a></li>
 
                             <ul id="employer_dropdown" class="dropdown-content">
-                                <li><a class="indego-text link" href="{{ url('employer/jobs/create') }}">Post a Job</a></li>
-                                <li><a class="link" href="{{ url('employer/jobs') }}">Jobs</a></li>
-                                <li><a class="link" href="{{ url('employer/setup') }}">Setup Employer Account</a></li>
+                                {{-- <li><a class="indego-text link" href="{{ url('employer/jobs/create') }}">Post a Job</a></li>
+                                <li><a class="link" href="{{ url('employer/jobs') }}">Jobs</a></li> --}}
+                                <li><a class="link" href="{{ url('employer/setup') }}">Upgrade to Employer Account</a></li>
                             </ul>
 
                         @endif

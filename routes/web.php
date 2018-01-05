@@ -38,7 +38,7 @@ Route::group(['prefix' => 'jobs/{job}', 'middleware' => 'auth'], function () {
     });
 });
 
-Route::group(['prefix' => 'employer', 'namespace' => 'Employer'], function () {
+Route::group(['prefix' => 'employer', 'namespace' => 'Employer', 'middleware' => 'auth'], function () {
 
     Route::resource('setup', 'SetupController');
 });

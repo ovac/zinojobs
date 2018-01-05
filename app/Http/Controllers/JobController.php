@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('job-access')->except(['index', 'store', 'create']);
+    }
     /**
      * Display a listing of the resource.
      *

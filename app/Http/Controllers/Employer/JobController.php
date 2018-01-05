@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('job-access')->except(['index', 'store', 'create']);
+    }
     /**
      * Display a listing of the resource.
      *

@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'roles' => \App\Http\Middleware\Roles::class,
         'active' => \App\Http\Middleware\Active::class,
         'can-employ' => \App\Http\Middleware\CanEmploy::class,
+        'application-access' => \App\Http\Middleware\ApplicationAccess::class,
+        'job-access' => \App\Http\Middleware\JobAccess::class,
     ];
 }

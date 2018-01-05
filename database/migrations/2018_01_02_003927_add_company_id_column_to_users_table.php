@@ -13,7 +13,7 @@ class AddCompanyIdColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->string('company_id')->nullable();
+            $table->integer('company_id')->nullable();
         });
     }
 

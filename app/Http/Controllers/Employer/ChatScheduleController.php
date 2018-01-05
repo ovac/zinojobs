@@ -56,7 +56,7 @@ class ChatScheduleController extends Controller
 
             event(new NewMessage($message));
 
-            return Flash::make()
+            Flash::make()
                 ->titleAs('Schedule created.')
                 ->createFlash('success');
 

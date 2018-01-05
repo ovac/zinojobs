@@ -180,18 +180,19 @@
 			  		window.location.href = '/employer/jobs/'+this.job.id+'/edit';
 			  	},
 			  	runDelete: function(){
-			  		var confirmation = confirm('Are you sure you want to delete this job?\nJob Title: '+this.job.title);
-
-			  		if(confirmation){
-				  		$.delete('/employer/jobs/'+ this.job.id)
-						    .then(function(job){
-						    	alert('Job Deleted successfully');
-								window.location.reload();
-						    })
-						    .catch(function(e){
-						    	console.log(e);
-						    });
-			  		}
+			  		var vm = this;
+			  		swal({
+			  			type: 'question',
+			  			title: 'Are you sure you want to delete this job?',
+			  			text: 'Job Title: '+this.job.title,
+			  			preConfirm: function(){
+			  				return $.ajax({ url: '/employer/jobs/'+ vm.job.id, type: 'DELETE' });
+			  			}
+			  		}).then(function(job){
+						window.location.reload();
+				    }, function(e){
+						console.log(e);
+					});
 			  	},
 				fetchJob: function(jobId){
 					var vm = this;

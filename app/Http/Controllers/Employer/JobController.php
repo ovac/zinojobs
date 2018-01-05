@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employer;
 
 use App\Company;
 use App\Http\Controllers\Controller;
+use App\Http\Flash;
 use App\Job;
 use App\Question;
 use Illuminate\Http\Request;
@@ -129,6 +130,7 @@ class JobController extends Controller
      */
     public function destroy(Job $job)
     {
-        //
+        Flash::make()->titleAs('Deleted Successfully')->createFlash('success');
+        $job->delete();
     }
 }

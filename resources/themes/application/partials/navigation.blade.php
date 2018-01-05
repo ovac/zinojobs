@@ -42,6 +42,7 @@
 
                     @if ($loop->first)
                         @if (Auth::check() && \Request::user()->company)
+                            <li><a class="link" href="{{ url('employer/setup') }}"><i class="material-icons right">settings</i></a></li>
                             <li><a class="dropdown-button" href="#!" data-activates="applicant_dropdown">Applicant Account<i class="material-icons right">arrow_drop_down</i></a></li>
 
                             <ul id="applicant_dropdown" class="dropdown-content">

@@ -138,7 +138,7 @@
 				               	<label v-bind:for="'question_2['+$index+']'">Question</label>
 				            </div>
 				            <div class="input-field col s4">
-							    <select class="validate" v-if="question.type != 'norminal'" v-bind:id="'question_2['+$index+']'" v-bind:name="'answer_2['+$index+']'" required>
+							    <select class="validate" v-if="question.type == 'boolean'" v-bind:id="'question_2['+$index+']'" v-bind:name="'answer_2['+$index+']'" required>
 
 							      <option value="true" selected>Yes/True</option>
 							      <option value="false">No/False</option>
@@ -151,9 +151,12 @@
 							      <option value="4">4</option>
 							      <option value="5">5</option>
 							    </select>
+             					<input class="validate" v-if="question.type == 'string'" v-bind:id="'question_2['+$index+']'" v-bind:name="'answer_2['+$index+']'" type="text" required>
+
 							    <label v-bind:for="'answer_2['+$index+']'">Answer</label>
 
 							    <input v-if="question.type == 'norminal'" type="hidden" v-bind:name="'type['+$index+']'" value="range">
+							    <input v-if="question.type == 'string'" type="hidden" v-bind:name="'type['+$index+']'" value="string">
 							</div>
 							<div class="col s1">
 								<br>
@@ -172,7 +175,7 @@
 						  	<!-- Dropdown Structure -->
 							<ul id='questionnaire_dropdown' class='dropdown-content'>
 								<li>
-									<a href="#!" @click="newQuestionnaire">
+									<a href="#!" @click="newQuestionnaire('boolean')">
 										<i class="material-icons">call_split</i>
 										True/False or Yes/No
 									</a>
@@ -181,6 +184,12 @@
 									<a href="#!" @click="newQuestionnaire('norminal')">
 										<i class="material-icons">linear_scale</i>
 										Norminal Scale
+									</a>
+								</li>
+								<li>
+									<a href="#!" @click="newQuestionnaire('string')">
+										<i class="material-icons">edit</i>
+										Input Text
 									</a>
 								</li>
 							</ul>

@@ -24,10 +24,6 @@ class JobAccess
             return $next($request);
         }
 
-        if ($request->is('jobs/*') && $this->isInCompany($request)) {
-            return redirect("employer/{$request->path()}");
-        }
-
         if ($request->is('jobs/*') && $this->isClosed($request) && $this->isAwarded($request)) {
             return $next($request);
         }

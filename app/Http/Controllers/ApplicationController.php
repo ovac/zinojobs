@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Application;
 use App\Attachment;
+use App\Http\Flash;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -100,9 +101,9 @@ class ApplicationController extends Controller
 
             $application->save();
 
-            if ($application->qualified) {
+            if ($application->isQualified()) {
 
-                return Flash::make()
+                Flash::make()
                     ->titleAs('You qualified.')
                     ->withMessage('The employer will be in touch.')
                     ->createFlash('success');

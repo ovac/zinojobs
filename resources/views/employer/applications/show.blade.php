@@ -330,7 +330,9 @@
 
 					if(data.message && data.message.application_id == vm.applicationId){
 						vm.messages.push(data.message);
-						ion.sound.play('button_tiny');
+						if(data.message.user.id != vm.userId){
+							ion.sound.play('button_tiny');
+						}
 				  		$(".chat-history").animate({
 						    scrollTop: $(".all-messages").height()
 						}, 400);

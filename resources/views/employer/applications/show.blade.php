@@ -237,6 +237,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/materialize-social@1.0.3/index.min.js"></script>
+	<script src="/js/ion.sound.js"></script>
 
 	<script type="text/javascript">
 
@@ -319,11 +320,17 @@
 
 				var vm = this;
 
+				ion.sound({
+	                sounds: [{ name: "button_tiny" }],
+	                path: "/sounds/",
+	                preload: true
+	            });
+
 				socket.on('application-messages-channel:message', function (data) {
 
 					if(data.message && data.message.application_id == vm.applicationId){
 						vm.messages.push(data.message);
-
+						ion.sound.play('button_tiny');
 				  		$(".chat-history").animate({
 						    scrollTop: $(".all-messages").height()
 						}, 400);

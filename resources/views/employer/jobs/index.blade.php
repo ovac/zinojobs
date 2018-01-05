@@ -18,9 +18,9 @@
 	    </a>
 	    <ul>
 	      <li><a class="btn-floating blue" href="{{ url('/employer/jobs/create') }}"><i class="material-icons">add</i></a></li>
-	      <li><a class="btn-floating yellow" @click="show"><i class="material-icons">visibility</i></a></li>
-	      <li><a class="btn-floating green" @click="edit"><i class="material-icons">edit</i></a></li>
-	      <li><a class="btn-floating red" @click="runDelete"><i class="material-icons">delete_sweep</i></a></li>
+	      <li v-if="selected"><a class="btn-floating yellow" @click="show"><i class="material-icons">visibility</i></a></li>
+	      <li v-if="selected"><a class="btn-floating green" @click="edit"><i class="material-icons">edit</i></a></li>
+	      <li v-if="selected"><a class="btn-floating red" @click="runDelete"><i class="material-icons">delete_sweep</i></a></li>
 	    </ul>
 	</div>
 
@@ -30,7 +30,7 @@
 	    </div>
 	 </div>
 
-	<div class="container">
+	<div class="container" v-if="jobs.length">
 		<div class="row ">
 	  			{{ $jobs->links() }}
 			<div class="col s7 ">
@@ -140,6 +140,12 @@
 	</div>
 
 
+	<div v-else class="container z-depth-3">
+		<h3 class="container" style="padding: 50px 0px">
+			<blockquote>You have not posted any job.</blockquote>
+		</h3>
+	</div>
+
 
 </div>
 
@@ -157,6 +163,7 @@
 				job: null,
 				loading: true,
 				tab: 1,
+				jobs: [@foreach ($jobs as $job) {!! $job !!}, @endforeach]||[]
 			},
 			methods: {
 				select: function(jobId){

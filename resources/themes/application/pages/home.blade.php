@@ -13,7 +13,7 @@
     <br>
     <br>
     <div class="center">
-        <img src="/img/logo.png" class="logo-img" alt="ZinoJobs" >
+        <img src="/img/logo.transparent.png" class="logo-img" alt="ZinoJobs" >
 
         <h2 class="blue-text">{!! $page->title or 'Find a job.' !!}</h2>
     </div>

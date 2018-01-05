@@ -28,7 +28,6 @@
 								<p>{{ $application->job->company->name }}</p>
 
 
-
 								<span class="new badge" data-badge-caption="Pending Review">Status:</span>
 							</li>
 						@endif
@@ -50,13 +49,10 @@
 					   		  @click="visit('{{ url("/jobs/{$application->job->id}/applications/{$application->id}") }}')"
 						   	>
 							    <img src="{{ $application->job->company->logo }}" class="circle">
-							      <span class="title"><b>{{ $application->job->title }}</b></span>
-							      <p>{{ $application->job->company->name }}</p>
+							    <span class="title"><b>{{ $application->job->title }}</b></span>
+						      	<p>{{ $application->job->company->name }}</p>
 
-										{{-- expr --}}
-								     	<span class="new badge red">{{ $application->messages->count() }}</span>
-
-							      <a href="#!" class="secondary-content"><i class="blue-text material-icons">grade</i><i class="blue-text material-icons">thumb_up</i></a>
+						     	<span class="new badge red">{{ $application->messages->count() }}</span>
 							</li>
 						@endif
 					@endforeach
@@ -75,13 +71,10 @@
 					   		  @click="visit('{{ url("/jobs/{$application->job->id}/applications/{$application->id}") }}')"
 						   	>
 							    <img src="{{ $application->job->company->logo }}" class="circle">
-							      <span class="title"><b>{{ $application->job->title }}</b></span>
-							      <p>{{ $application->job->company->name }}</p>
+						      	<span class="title"><b>{{ $application->job->title }}</b></span>
+							    <p>{{ $application->job->company->name }}</p>
 
-										{{-- expr --}}
-								     	<span class="new badge red">{{ $application->messages->count() }}</span>
-
-							      <a href="#!" class="secondary-content"><i class="blue-text material-icons">grade</i><i class="blue-text material-icons">thumb_up</i></a>
+							    <span class="new badge red">{{ $application->messages->count() }}</span>
 							</li>
 						@endif
 					@endforeach

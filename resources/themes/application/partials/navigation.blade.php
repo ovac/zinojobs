@@ -24,6 +24,21 @@
                     @endif
                     {{-- <li><a class="link" href="{{ url('pricing') }}">Pricing</a></li> --}}
                     {{-- <li><a class="link" href="{{ url('about') }}">About</a></li> --}}
+                    {{-- @modules() --}}
+
+                    @if (config('app.locale') == 'fr')
+                        @menu('main-fr')
+                    @else
+                        @menu('main')
+                    @endif
+
+                    @if (Auth::check())
+
+                        @if (\Request::user()->company)
+                            <li><a href="{{ url('employer/jobs/create') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">POST A JOB</a></li>
+                        @else
+                            <li><a href="{{ url('applications') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">My Applications</a></li>
+                        @endif
 
                     @if ($loop->first)
                         @if (Auth::check() && \Request::user()->company)
@@ -43,21 +58,7 @@
 
                         @endif
                     @endif
-                    {{-- @modules() --}}
 
-                    @if (config('app.locale') == 'fr')
-                        @menu('main-fr')
-                    @else
-                        @menu('main')
-                    @endif
-
-                    @if (Auth::check())
-
-                        @if (\Request::user()->company)
-                            <li><a href="{{ url('employer/jobs/create') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">POST A JOB</a></li>
-                        @else
-                            <li><a href="{{ url('applications') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">My Applications</a></li>
-                        @endif
                         @can('quarx')
                             <li><a class="btn" href="{{ url('admin/dashboard') }}">Admin</a></li>
                         @endcan

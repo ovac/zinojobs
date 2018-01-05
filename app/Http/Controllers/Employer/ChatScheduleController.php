@@ -12,6 +12,10 @@ use Illuminate\Http\Request;
 
 class ChatScheduleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('message-access');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,28 +46,24 @@ class ChatScheduleController extends Controller
     {
         $user = $request->user();
 
-        if ($request->user()->company_id = $job->company_id) {
-            $message = new Message(
-                ['message' => "An online interview schedule has been set for {$request->date} at {$request->time}"]
-            );
+        $message = new Message(
+            ['message' => "An online interview schedule has been set for {$request->date} at {$request->time}"]
+        );
 
-            $message->application_id = $application->id;
-            $message->user()->associate($user);
+        $message->application_id = $application->id;
+        $message->user()->associate($user);
 
-            $message->save();
+        $message->save();
 
-            $message->load('user:id,name');
+        $message->load('user:id,name');
 
-            event(new NewMessage($message));
+        event(new NewMessage($message));
 
-            Flash::make()
-                ->titleAs('Schedule created.')
-                ->createFlash('success');
+        Flash::make()
+            ->titleAs('Schedule created.')
+            ->createFlash('success');
 
-            return redirect()->back();
-        }
-
-        return response(401);
+        return redirect()->back();
     }
 
     /**

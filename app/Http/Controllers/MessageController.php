@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('message-access');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -38,22 +42,19 @@ class MessageController extends Controller
      */
     public function store(Request $request, Job $job, Application $application)
     {
-        if ($application->user_id == $user = auth()->user()->id) {
-            $message = new Message($request->all());
+        $user = $request->user();
+        $message = new Message($request->all());
 
-            $message->application_id = $application->id;
-            $message->user()->associate($user);
+        $message->application_id = $application->id;
+        $message->user()->associate($user);
 
-            $message->save();
+        $message->save();
 
-            $message->load('user:id,name');
+        $message->load('user:id,name');
 
-            event(new NewMessage($message));
+        event(new NewMessage($message));
 
-            return $message;
-        }
-
-        return response(401);
+        return $message;
     }
 
     /**

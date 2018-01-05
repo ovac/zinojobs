@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'can-employ' => \App\Http\Middleware\CanEmploy::class,
         'application-access' => \App\Http\Middleware\ApplicationAccess::class,
         'job-access' => \App\Http\Middleware\JobAccess::class,
+        'message-access' => \App\Http\Middleware\MessageAccess::class,
     ];
 }

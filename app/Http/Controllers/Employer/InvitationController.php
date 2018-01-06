@@ -53,6 +53,7 @@ class InvitationController extends Controller
 
             $invitation = new Invitation($request->all());
 
+            $invitation->note = $request->note ?: 'None';
             $invitation->time = Carbon::parse($request->date . ' ' . $request->time)->toDateTimeString();
             $invitation->user()->associate($application->user);
             $invitation->job()->associate($job);
@@ -61,7 +62,7 @@ class InvitationController extends Controller
 
             $invitation->save();
 
-            $messageString = "A face to face intervier has been scheduled for: {$invitation->time->format('l jS \\of F Y h:i:s A')}. Interview location is set for: {$request->location}. Additional note: {($request->note ?: 'None')}";
+            $messageString = "A face to face interview has been scheduled for: {$invitation->time->format('l jS \\of F Y h:i:s A')}. Interview location is set for: {$request->location}. Additional note: {$invitation->note}";
 
         } else {
             $messageString = "An online interview schedule has been set for {$request->date} at {$request->time}";

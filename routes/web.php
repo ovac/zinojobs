@@ -39,6 +39,8 @@ Route::resource('jobs', 'JobController');
 |--------------------------------------------------------------------------
  */
 Auth::routes();
+Route::get('logout', 'Auth\LoginController@logout');
+
 /*
 |--------------------------------------------------------------------------
 | Authenticated Routes

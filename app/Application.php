@@ -16,7 +16,7 @@ class Application extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->has('invitation')) {
+        if ($this->invitations->count()) {
             return 'invited';
         }
 
@@ -69,7 +69,7 @@ class Application extends Model
 
     public function invitation()
     {
-        return $this->hasOne(Invitation::class);
+        return $this->hasMany(Invitation::class);
     }
 
     public function attachments()
@@ -93,13 +93,17 @@ class Application extends Model
     public function requirementsMismatch()
     {
         $scheme = [];
-        foreach ($this->job->questions()->where('requirement', true)->get() as $value) {
-            $scheme[] = $value->id . '~~' . $value->answer;
-        }
-
         $answers = [];
-        foreach ($this->answers->where('requirement', true)->values() as $value) {
-            $answers[] = $value->question_id . '~~' . $value->answer;
+
+        if ($this->job) {
+
+            foreach ($this->job->questions()->where('requirement', true)->get() as $value) {
+                $scheme[] = $value->id . '~~' . $value->answer;
+            }
+
+            foreach ($this->answers->where('requirement', true)->values() as $value) {
+                $answers[] = $value->question_id . '~~' . $value->answer;
+            }
         }
 
         return collect(array_diff($answers, $scheme));

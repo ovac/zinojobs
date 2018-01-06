@@ -22,7 +22,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = auth()->user()->applications()->get()->where('qualified', true);
+        $applications = auth()->user()->applications()->whereHas('job')->get()->where('qualified', true);
 
         return view('application.index', compact('applications'));
     }

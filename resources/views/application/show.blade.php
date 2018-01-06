@@ -49,18 +49,13 @@
 					{{-- <div>This job is no longer available.</div> --}}
 			    </blockquote>
 
-
-				<div v-if="status == 'invited'">
-					<p>Date: 24th June, 2017</p>
-					<p>Time: 12:30pm</p>
-					<p>Address: 15, someething somewhere somehow</p>
-
-					<iframe width="100%" height="400" frameborder="0" style="border:0"
-						src="https://www.google.com/maps/embed/v1/place?
-						q=place_id:EiAyMiBXaGl0bWFuIFJkLCBMb25kb24gRTMgNFJCLCBVSw
-						&key={{ env('GOOGLE_MAP_KEY') }}"
-						allowfullscreen>
-					</iframe>
+				<div class="collection" v-if="status == 'invited'">
+					@foreach ($application->invitations as $invitation)
+						<div class="collection-item">
+							<p>Date/Time: {{ $invitation->time->format('l jS \\of F Y h:i:s A') }}</p>
+							<p><i class="red-text left material-icons">place</i>{{ $invitation->location }}</p>
+						</div>
+					@endforeach
 				</div>
 		    </div>
 		</div>
@@ -203,7 +198,7 @@
 			messages: [],
 			contacted: null,
 
-			status: 'available'
+			status: '{{ $application->status }}'
 		};
 
 		var application = new Vue({

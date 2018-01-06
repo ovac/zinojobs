@@ -26,7 +26,10 @@ Route::get('login/{id}', function (User $id) {
 |--------------------------------------------------------------------------
  */
 Route::get('/', 'PagesController@home');
-Route::get('/dashboard', 'PagesController@home');
+
+Route::get('/dashboard', function () {
+    return Redirect::to('/');
+});
 
 Route::resource('jobs', 'JobController');
 

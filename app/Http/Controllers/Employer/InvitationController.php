@@ -61,7 +61,7 @@ class InvitationController extends Controller
 
             $invitation->save();
 
-            $messageString = "You were invited for a face to face interview to: {$request->location}. Date and time respectively is: {$invitation->time->format('l jS \\of F Y h:i:s A')}";
+            $messageString = "A face to face intervier has been scheduled for: {$invitation->time->format('l jS \\of F Y h:i:s A')}. Interview location is set for: {$request->location}. Additional note: {($request->note ?: 'None')}";
 
         } else {
             $messageString = "An online interview schedule has been set for {$request->date} at {$request->time}";

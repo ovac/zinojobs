@@ -54,6 +54,7 @@
 						<div class="collection-item">
 							<p>Date/Time: {{ $invitation->time->format('l jS \\of F Y h:i:s A') }}</p>
 							<p><i class="red-text left material-icons">place</i>{{ $invitation->location }}</p>
+							<p>Additional Note: {{ $invitation->note ?: 'None' }}</p>
 						</div>
 					@endforeach
 				</div>

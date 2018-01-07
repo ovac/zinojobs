@@ -27,11 +27,13 @@
                     {{-- <li class="waves-effect waves-light"><a class="link" href="{{ url('about') }}">About</a></li> --}}
                     {{-- @modules() --}}
 
+                    {{--
                     @if (config('app.locale') == 'fr')
                         @menu('main-fr')
                     @else
                         @menu('main')
                     @endif
+                    --}}
 
                     @if (Auth::check())
 

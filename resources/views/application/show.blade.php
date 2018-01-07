@@ -64,7 +64,7 @@
 		<br>
 		<br>
 
-		<div class="clearfix container z-depth-3 white" id="chat" v-if="contacted">
+		<div class="clearfix container z-depth-3 white" id="chat" v-if="messages.length">
 
 
 		    <div class="chat">

@@ -29,6 +29,11 @@
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="/css/materialize.min.css">
 
+        <style type="text/css">
+            #sidenav-overlay {
+                z-index: 996;
+            }
+        </style>
         <!-- Compiled and minified JavaScript -->
 
         @yield('stylesheets')

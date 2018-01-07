@@ -4,8 +4,9 @@
 
         <div class="nav-wrapper blue {{ Auth::check() && \Request::user()->company ? 'darken-4': '' }}">
           <div class="col s12">
-            <a href="/" class="brand-logo hide-on-med-and-down"><img src="/img/logo.png" class="logo-img" alt="" height="64px"></a>
-            <a href="/" class="brand-logo" style="left:100px;">
+            <a href="/" class="brand-logo hide-on-med-and-down">
+                <img src="/img/logo.png" class="logo-img" alt="" height="64px"></a>
+            <a href="/" class="brand-logo" style="left:120px;">
                 ZinoJobs
                 <font style="font-size: 10pt">
                     {{ Auth::check() && \Request::user()->company ? 'For Employers': '' }}

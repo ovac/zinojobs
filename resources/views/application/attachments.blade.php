@@ -1,6 +1,6 @@
 <br>
 <br>
-<div class="container z-depth-5 white center" style="padding: 3em 0px;">
+<div class="container z-depth-3 white center" style="padding: 3em 0px;">
 	<div>
 	    <span style="font-size:2em;">
 	    	<u class="text-center">Attachments</u>

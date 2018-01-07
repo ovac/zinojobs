@@ -27,7 +27,7 @@
 
 <div style="display: none;" id="main">
 
-		<div class="container z-depth-5 white"  style="padding: 2em 0px; " id="status">
+		<div class="container z-depth-3 white"  style="padding: 2em 0px; " id="status">
 			<div class="container">
 				<blockquote style="font-size: 3em;">
 					<p>You applied for this job. </p>
@@ -64,7 +64,7 @@
 		<br>
 		<br>
 
-		<div class="clearfix container z-depth-5 white" id="chat" v-if="contacted">
+		<div class="clearfix container z-depth-3 white" id="chat" v-if="contacted">
 
 
 		    <div class="chat">
@@ -129,7 +129,7 @@
 
 		    </div> <!-- end chat -->
 
-			{{-- <div class="container z-depth-5 white">
+			{{-- <div class="container z-depth-3 white">
 				@include('jobs.partial', compact('job'))
 			</div> --}}
 

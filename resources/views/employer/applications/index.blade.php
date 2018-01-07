@@ -21,8 +21,7 @@
 	<div class="container">
 		<div class="row ">
 
-
-	  		<div class="col s6">
+	  		<div class="col s12 m6">
 				<div class="progress" v-if="loading">
 				    <div class="indeterminate"></div>
 				</div>
@@ -84,7 +83,7 @@
 					</div>
 	  			</div>
 			</div>
-			<div class="col s6 ">
+			<div class="col s12 m6">
 				<ul class="collection z-depth-3" >
 
 				    @foreach($applications as $application)

@@ -7,7 +7,7 @@
 			<nav class="top-nav blue-grey darken-3">
 		        <div class="container">
 		          <div class="nav-wrapper">
-		          	<a style="font-size: 15pt" class="page-title">
+		          	<a style="font-size: 15pt" class="page-title truncate">
 		          		Post an open job position at: {{ $company->name }}
 			        </a>
 			      </div>

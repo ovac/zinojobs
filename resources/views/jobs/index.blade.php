@@ -7,11 +7,11 @@
 
 	<div class="row">
   		{{ $jobs->appends(request()->query())->links()  }}
-		<div class="col s5">
+		<div class="col m5 s12">
 			<ul class="collection z-depth-1" v-if="{{ $jobs->count() }}">
 
 			    @foreach($jobs as $job)
-				    <li class="collection-item avatar waves-effect col s12" v-bind:class="{ 'blue lighten-4': selected === {{ $job->id }} }" @click="select({{ $job->id }})">
+				    <li class="collection-item avatar waves-effect col s12" v-bind:class="{ 'blue lighten-4': selected === {{ $job->id }} }" @click="select({{ $job->id }})" @dblclick="open({{ $job->id }})">
 				    	<br>
 				      <img src="{{ $job->company->logo }}" alt="" class="circle">
 				      <span class="title"><b>{{ $job->title }}</b></span>
@@ -23,7 +23,7 @@
 			    @endforeach
   			</ul>
 		</div>
-		<div class="col s7">
+		<div class="col s7 hide-on-small-only">
 			<div class="progress" v-if="loading">
 			    <div class="indeterminate"></div>
 			</div>
@@ -119,6 +119,9 @@
 					} else {
 						this.loading = false;
 					}
+			  	},
+			  	open: function(jobId){
+			  		window.location.href = '/jobs/'+jobId+'/applications/create';
 			  	},
 				setTab: function(tabId){
 					this.tab = tabId;

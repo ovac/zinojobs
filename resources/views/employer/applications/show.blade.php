@@ -5,12 +5,12 @@
 <div class="container-fluid" id="application">
 	<nav class="top-nav blue-grey darken-3">
         <div class="container">
-          <div class="nav-wrapper"><a style="font-size: 15pt" class="page-title">Applying For: {{ $job->title }}</a></div>
+          <div class="nav-wrapper"><a style="font-size: 15pt" class="page-title truncate">Applying For: {{ $job->title }}</a></div>
         </div>
     </nav>
 	<nav class="top-nav  blue-grey darken-4">
         <div class="container">
-          <div class="nav-wrapper "><a style="font-size: 15pt" class="page-title">Applicant Name: {{ $application->user->name }}</a></div>
+          <div class="nav-wrapper "><a style="font-size: 15pt" class="page-title truncate">Applicant Name: {{ $application->user->name }}</a></div>
         </div>
     </nav>
 </div>

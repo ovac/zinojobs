@@ -24,7 +24,7 @@
 	    </ul>
 	</div>
 
-	<div class="tap-target" data-activates="menu">
+	<div class="tap-target hide-on-small-only" data-activates="menu" >
 	    <div class="tap-target-content">
 	      <h5 v-if="selected" >@{{ job.title }}</h5>
 	    </div>
@@ -33,11 +33,11 @@
 	<div class="container" v-if="jobs.length">
 		<div class="row ">
 	  			{{ $jobs->links() }}
-			<div class="col s7 ">
+			<div class="col m7 s12 ">
 				<ul class="collection z-depth-1" >
 
 				    @foreach($jobs as $job)
-					    <li class="collection-item avatar waves-effect col s12" v-bind:class="{ 'blue lighten-4': selected === {{ $job->id }} }" @click="select({{ $job->id }})">
+					    <li class="collection-item avatar waves-effect col s12" v-bind:class="{ 'blue lighten-4': selected === {{ $job->id }} }" @click="select({{ $job->id }})" @dblclick="open({{ $job->id }})">
 					    	<br>
 					      <span class="new badge blue" data-badge-caption="Applications" v-if="{{ $job->applications->count() }}">{{ $job->applications->count() }}</span>
 					      <img src="{{ $job->company->logo }}" alt="" class="circle">
@@ -50,7 +50,7 @@
 				    @endforeach
 	  			</ul>
 			</div>
-			<div class="col s5">
+			<div class="col s5 hide-on-small-only">
 				<div class="progress" v-if="loading">
 				    <div class="indeterminate"></div>
 				</div>
@@ -178,6 +178,9 @@
 			  	},
 			  	edit: function(){
 			  		window.location.href = '/employer/jobs/'+this.job.id+'/edit';
+			  	},
+			  	open: function(jobId){
+			  		window.location.href = '/employer/jobs/'+jobId+'/applications';
 			  	},
 			  	runDelete: function(){
 			  		var vm = this;

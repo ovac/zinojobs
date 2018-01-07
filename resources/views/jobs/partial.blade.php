@@ -2,8 +2,8 @@
 	<div class="card horizontal">
 	  <div class="card-stacked">
 	    <div class="card-content">
-		<h3 class="header">{{ $job->title }}</h3>
-	       	<b>
+		<h3 class="header truncate">{{ $job->title }}</h3>
+	       	<b class="truncate">
 				{{ $job->company->name }}
 			</b>
 	    </div>

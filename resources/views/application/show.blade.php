@@ -33,7 +33,7 @@
 					<p>You applied for this job. </p>
 
 					@if ($application->qualified)
-						<p v-if="!contacted && status != 'lost'">After a manual review, someone from {{ $job->company->name }} will get back to you.</p>
+						<p v-if="!contacted && status != 'lost' && !messages.length">After a manual review, someone from {{ $job->company->name }} will get back to you.</p>
 
 						<p v-if="status == 'lost'">The job has been awarded to another applicant.</p>
 

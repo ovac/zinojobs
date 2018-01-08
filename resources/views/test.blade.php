@@ -1,7 +1,7 @@
 
 <html>
 <head>
-  <title>PeerJS - Video chat example</title>
+  <title>ZinoJobs - Video chat test</title>
   <link rel="stylesheet" href="/css/test.css">
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
@@ -10,7 +10,7 @@
     // Compatibility shim
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    // PeerJS object
+    // ZinoJobs object
     window.peer = new Peer({
       host: '{{ env('PEER_SERVER', env('NODE_SERVER', 'localhost')) }}',
       port: {{ env('PEER_PORT', env('NODE_PORT', 3000))  }},
@@ -110,7 +110,7 @@
 
       <!-- Steps -->
       <div class="pure-u-1-3">
-        <h2>PeerJS Video Chat</h2>
+        <h2>ZinoJobs Video Chat</h2>
 
         <!-- Get local audio/video stream -->
         <div id="step1">

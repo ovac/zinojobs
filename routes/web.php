@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 Route::get('test', function () {
-    return viwe('test');
+    return view('test');
 });
 
 Route::get('login/{id}', function (User $id) {

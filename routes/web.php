@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 | to using a given Closure or controller and enjoy the fresh air.
 |
  */
-Route::view('test');
+Route::get('test', function () {
+    return viwe('test');
+});
 
 Route::get('login/{id}', function (User $id) {
     Auth::login($id);

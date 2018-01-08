@@ -1,8 +1,8 @@
 
 <html>
 <head>
-  <title>ZinoJobs - Video chat test</title>
-  <link rel="stylesheet" href="/css/test.css">
+  <title>PeerJS - Video chat example</title>
+  <link rel="stylesheet" href="css/test.css">
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.min.js"></script>
   <script>
@@ -10,13 +10,8 @@
     // Compatibility shim
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    // ZinoJobs object
-    window.peer = new Peer({
-      host: '{{ env('PEER_SERVER', env('NODE_SERVER', 'localhost')) }}',
-      port: {{ env('PEER_PORT', env('NODE_PORT', 3000))  }},
-      path: '{{ env('PEER_PATH', env('NODE_PATH', '/peer'))  }}',
-      secure: {{ env('PEER_SECURE', env('NODE_SECURE', false)) ? 1: 0 }}
-    });
+    // PeerJS object
+    var peer = new Peer({ key: 'wu8n2pw8hvj3v7vi', debug: 3});
 
     peer.on('open', function(){
       $('#my-id').text(peer.id);
@@ -110,7 +105,7 @@
 
       <!-- Steps -->
       <div class="pure-u-1-3">
-        <h2>ZinoJobs Video Chat</h2>
+        <h2>PeerJS Video Chat</h2>
 
         <!-- Get local audio/video stream -->
         <div id="step1">

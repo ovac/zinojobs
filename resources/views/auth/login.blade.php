@@ -7,7 +7,7 @@
     <div class="card-panel z-depth-4">
 
 
-      <span class="card-title text mtext chip">Don't have an account? <a href="/register">Create a free account</a> </span>
+      <span class="card-title text mtext chip">Don't have an account? <a href="/register">Sign-up Free</a> </span>
 
 
       <div class="row">

@@ -246,10 +246,10 @@
 				vm.fetchMessages();
 
 				window.peer = new Peer({
-					host: '{{ env('NODE_SERVER', 'localhost') }}',
-					port: {{ env('NODE_PORT', 3000) }},
-					path: '/peer',
-					secure: {{ env('NODE_SECURE', false) ? 1: 0 }}
+					host: '{{ env('PEER_SERVER', env('NODE_SERVER', 'localhost')) }}',
+					port: {{ env('PEER_PORT', env('NODE_PORT', 3000))  }},
+					path: '{{ env('PEER_PATH', env('NODE_PATH', '/peer'))  }}',
+					secure: {{ env('PEER_SECURE', env('NODE_SECURE', false)) ? 1: 0 }}
 				});
 
 				// PeerJS object

@@ -61,6 +61,7 @@
         </li>
     @endif
  --}}
+    <li class="sidebar-header"><span>Manage Modules</span></li>
     {!! ModuleService::menus() !!}
 
     {!! Quarx::packageMenus() !!}

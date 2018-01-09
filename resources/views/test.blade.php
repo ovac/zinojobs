@@ -11,7 +11,12 @@
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
     // PeerJS object
-    var peer = new Peer({ key: 'wu8n2pw8hvj3v7vi', debug: 3});
+    window.peer = new Peer({
+      host: '{{ env('PEER_SERVER', env('NODE_SERVER', 'localhost')) }}',
+      port: {{ env('PEER_PORT', env('NODE_PORT', 3000))  }},
+      path: '{{ env('PEER_PATH', env('NODE_PATH', '/peer'))  }}',
+      secure: {{ env('PEER_SECURE', env('NODE_SECURE', false)) ? 1: 0 }}
+    });
 
     peer.on('open', function(){
       $('#my-id').text(peer.id);

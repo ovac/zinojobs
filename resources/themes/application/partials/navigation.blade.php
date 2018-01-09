@@ -83,7 +83,7 @@
                             </li>
                         @endif
                     @else
-                        <li><a href="{{ url('/login') }}" class="bold-text">Login</a></li>
+                        <li><a href="{{ url('/login') }}" class="bold-text"><i class="material-icons left">fingerprint</i> Login</a></li>
                         <li><a href="{{ url('/register') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">Create Free Account</a></li>
                     @endif
                 </ul>

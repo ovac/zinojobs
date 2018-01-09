@@ -29,6 +29,8 @@
                                 <a href="/account"><span class="white-text email">{{ auth()->user()->email }}</span></a>
                             </div>
                         </li>
+                        <li><a class="link" href="{{ url('account') }}"><i class="material-icons left">account_circle</i> Account</a></li>
+
                     @endif
 
                     <li><a class="link" href="{{ url('/') }}"><i class="material-icons left">home</i> Home</a></li>
@@ -57,20 +59,20 @@
                             <li><a href="{{ url('applications') }}" class="waves-effect waves-light btn yellow darken-2 grey-text text-darken-4 segment-track-login">My Applications</a></li>
                         @endif
 
-                    @if ($loop->first)
-                        @if (Auth::check() && \Request::user()->company)
-                            <li><a class="link" href="{{ url('employer/setup') }}"><i class="material-icons left">settings</i> Settings</a></li>
-                        @else
-                            <li><a class="dropdown-button" href="#!" data-activates="employer_dropdown">I'm an Employer<i class="material-icons right">arrow_drop_down</i></a></li>
+                        @if ($loop->first)
+                            @if (Auth::check() && \Request::user()->company)
+                                <li><a class="link" href="{{ url('employer/setup') }}"><i class="material-icons left">settings</i> Settings</a></li>
+                            @else
+                                <li><a class="dropdown-button" href="#!" data-activates="employer_dropdown">I'm an Employer<i class="material-icons right">arrow_drop_down</i></a></li>
 
-                            <ul id="employer_dropdown" class="dropdown-content">
-                                {{-- <li><a class="indego-text link" href="{{ url('employer/jobs/create') }}">Post a Job</a></li>
-                                <li><a class="link" href="{{ url('employer/jobs') }}">Jobs</a></li> --}}
-                                <li><a class="link" href="{{ url('employer/setup') }}">Upgrade to Employer Account</a></li>
-                            </ul>
+                                <ul id="employer_dropdown" class="dropdown-content">
+                                    {{-- <li><a class="indego-text link" href="{{ url('employer/jobs/create') }}">Post a Job</a></li>
+                                    <li><a class="link" href="{{ url('employer/jobs') }}">Jobs</a></li> --}}
+                                    <li><a class="link" href="{{ url('employer/setup') }}">Upgrade to Employer Account</a></li>
+                                </ul>
 
+                            @endif
                         @endif
-                    @endif
 
                         @can('quarx')
                             <li><a class="btn" href="{{ url('admin/dashboard') }}">Admin</a></li>

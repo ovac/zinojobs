@@ -209,7 +209,7 @@
 
 			    		<div class="container" style="margin-bottom: 120px">
 				    		<div class="center">
-				    			<h5>Please select a date and time for the online interview.</h5>
+				    			<h5>Please select a date and time for the @{{ type }} interview.</h5>
 				    		</div>
 				    		<br>
 				    		<br>

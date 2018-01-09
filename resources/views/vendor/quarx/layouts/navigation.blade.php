@@ -9,7 +9,7 @@
             <span class="fa fa-close nav-close"></span>
         </button>
         <span class="navbar-brand">
-            <span class="quarx-logo"></span> {{ config('quarx.backend-title', 'Quarx') }}
+            <a href="/"><img src="/img/logo.png" alt="" height="30px"></a>
         </span>
         @if (Auth::user())
         <p class="navbar-text navbar-left raw-m-hide">Signed in as {{ Auth::user()->name }}</p>

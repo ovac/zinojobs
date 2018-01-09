@@ -7,28 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-
-    protected $fillable = [
-        'title',
-        'description',
-        'salary',
-        'location',
-        'closing',
-        'qualification',
-    ];
-
-    protected $appends = ['applied'];
-
-    protected $dates = ['closing'];
-
-    public function getAppliedAttribute($model)
-    {
-        if (auth()->check()) {
-            return (bool) $this->applications()->where('user_id', auth()->user()->id)->count();
-        }
-
-        return false;
-    }
+    ///////////////////////////////////////////////
+    /* Job Relationships */
+    ///////////////////////////////////////////////
 
     public function poster()
     {
@@ -50,6 +31,11 @@ class Job extends Model
         return $this->hasMany(Application::class);
     }
 
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class);
+    }
+
     public function questions()
     {
         return $this->hasMany(Question::class);
@@ -59,4 +45,34 @@ class Job extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    ///////////////////////////////////////////////
+    /* Job Attribute Mutators */
+    ///////////////////////////////////////////////
+
+    protected $appends = ['applied'];
+
+    protected $dates = ['closing'];
+
+    public function getAppliedAttribute($model)
+    {
+        if (auth()->check()) {
+            return (bool) $this->applications()->where('user_id', auth()->user()->id)->count();
+        }
+
+        return false;
+    }
+
+    ///////////////////////////////////////////////
+    /* Job Fillable and Guarded Fields */
+    ///////////////////////////////////////////////
+
+    protected $fillable = [
+        'title',
+        'description',
+        'salary',
+        'location',
+        'closing',
+        'qualification',
+    ];
 }

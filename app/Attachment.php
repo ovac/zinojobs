@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
 
+    ///////////////////////////////////////////////
+    /* Attachment Relationships */
+    ///////////////////////////////////////////////
+
     public function application()
     {
         return $this->belongsTo(Application::class);

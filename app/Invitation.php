@@ -11,6 +11,10 @@ class Invitation extends Model
 
     protected $casts = ['time' => 'datetime'];
 
+    ///////////////////////////////////////////////
+    /* Invitation for Intervew Relationships */
+    ///////////////////////////////////////////////
+
     public function user()
     {
         return $this->belongsTo(User::class);

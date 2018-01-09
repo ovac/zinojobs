@@ -1,9 +1,9 @@
 <ul class="nav nav-sidebar">
     <li class="@if (Request::is(config('quarx.backend-route-prefix', 'quarx').'/dashboard')) active @endif">
-        <a href="{!! url(config('quarx.backend-route-prefix', 'quarx').'/dashboard') !!}"><span class="fa fa-fw fa-dashboard"></span> Dashboard</a>
+        <a href="{!! url(config('quarx.backend-route-prefix', 'quarx').'/dashboard') !!}"><span class="fa fa-fw fa-dashboard"></span> Analytics</a>
     </li>
 
-    <li class="@if (Request::is(config('quarx.backend-route-prefix', 'quarx').'/help')) active @endif">
+    {{-- <li class="@if (Request::is(config('quarx.backend-route-prefix', 'quarx').'/help')) active @endif">
         <a href="{!! url(config('quarx.backend-route-prefix', 'quarx').'/help') !!}"><span class="fa fa-fw fa-info-circle"></span> Help</a>
     </li>
 
@@ -60,7 +60,7 @@
             <a href="{!! url(config('quarx.backend-route-prefix', 'quarx').'/events') !!}"><span class="fa fa-fw fa-calendar"></span> Events</a>
         </li>
     @endif
-
+ --}}
     {!! ModuleService::menus() !!}
 
     {!! Quarx::packageMenus() !!}

@@ -24,7 +24,7 @@ class Role extends Model
     protected $fillable = [
         'name',
         'label',
-        'permissions'
+        'permissions',
     ];
 
     /**
@@ -34,18 +34,8 @@ class Role extends Model
      */
     public static $rules = [
         'name' => 'required|unique:roles',
-        'label' => 'required'
+        'label' => 'required',
     ];
-
-    /**
-     * A Roles users
-     *
-     * @return Relationship
-     */
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
 
     /**
      * Find a role by name
@@ -56,5 +46,19 @@ class Role extends Model
     public static function findByName($name)
     {
         return Role::where('name', $name)->firstOrFail();
+    }
+
+    ///////////////////////////////////////////////
+    /* Role Relationships */
+    ///////////////////////////////////////////////
+
+    /**
+     * A Roles users
+     *
+     * @return Relationship
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

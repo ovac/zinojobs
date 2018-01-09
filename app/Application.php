@@ -7,6 +7,40 @@ use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
 {
+
+    ///////////////////////////////////////////////
+    /* Application Relationships */
+    ///////////////////////////////////////////////
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class);
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
+
+    ///////////////////////////////////////////////
+    /* Application Attribute Mutatators */
+    ///////////////////////////////////////////////
+
     protected $appends = ['status'];
 
     public function getAnswersAttribute($answers)
@@ -47,37 +81,9 @@ class Application extends Model
         return $this->isQualified();
     }
 
-    public function job()
-    {
-        return $this->belongsTo(Job::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function messages()
-    {
-        return $this->hasMany(Message::class);
-    }
-
-    public function invitations()
-    {
-        return $this->hasMany(Invitation::class);
-    }
-
-    public function invitation()
-    {
-        return $this->hasMany(Invitation::class);
-    }
-
-    public function attachments()
-    {
-        return $this->hasMany(Attachment::class);
-    }
-
-    /////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////
+    /* Application Utility Methods */
+    ///////////////////////////////////////////////
 
     public function isQualified()
     {

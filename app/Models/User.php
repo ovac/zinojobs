@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Answer;
 use App\Application;
 use App\Company;
+use App\Invitation;
+use App\Message;
 use App\Models\Role;
 use App\Models\UserMeta;
 use App\Notifications\ResetPassword;
+use App\Picture;
 use App\Social;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -144,6 +148,21 @@ class User extends Authenticatable
         $this->notify(new ResetPassword($token));
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+
+            $model->social()->save(new Social);
+
+        });
+    }
+
+    ///////////////////////////////////////////////
+    /* User Relationships */
+    ///////////////////////////////////////////////
+
     /**
      * User Roles
      *
@@ -164,14 +183,23 @@ class User extends Authenticatable
         return $this->hasOne(Social::class);
     }
 
-    public static function boot()
+    public function invitations()
     {
-        parent::boot();
+        return $this->hasMany(Invitation::class);
+    }
 
-        self::created(function ($model) {
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 
-            $model->social()->save(new Social);
+    public function picture()
+    {
+        return $this->hasMany(Picture::class);
+    }
 
-        });
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

@@ -8,7 +8,7 @@
         @endif
         <h1 class="page-header">Admin Dashboard</h1>
     </div>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-2">
             <div class="panel panel-default text-center">
                 <div class="panel-heading">
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row">
         <div class="col-md-4 col-md-offset-2">

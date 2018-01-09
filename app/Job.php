@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
+use Yab\Quarx\Models\QuarxModel as Model;
 
 class Job extends Model
 {

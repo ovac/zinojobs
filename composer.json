@@ -31,7 +31,9 @@
           "app/helpers.php"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Quarx\\": "quarx/",
+            "Quarx\\Modules\\": "quarx/modules/"
         }
     },
     "autoload-dev": {

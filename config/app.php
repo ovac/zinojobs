@@ -167,7 +167,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Yab\Quarx\QuarxProvider::class,
 
         /*
          * Application Service Providers...

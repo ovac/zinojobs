@@ -7,6 +7,7 @@ $factory->define(App\Invitation::class, function (Faker $faker) {
     return [
         'job_id' => rand(1, 1000),
         'host_id' => rand(1, 1000),
+        'application_id' => rand(1, 1000),
         'user_id' => rand(1, 100),
         'location' => $faker->address(),
         'note' => $faker->realText(),

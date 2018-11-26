@@ -1,1 +1,0 @@
-<li class="@if (Request::is(config('quarx.backend-route-prefix', 'quarx').'/companies') || Request::is(config('quarx.backend-route-prefix', 'quarx').'/companies/*')) active @endif"><a href="{{ url(config('quarx.backend-route-prefix', 'quarx').'/companies') }}"><i class="material-icons left">work</i> Companies</a></li>

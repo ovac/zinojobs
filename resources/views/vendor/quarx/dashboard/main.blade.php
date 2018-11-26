@@ -1,1 +1,0 @@
-@extends('quarx::layouts.dashboard')

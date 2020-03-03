@@ -28,7 +28,7 @@ Route::get('login/{id}', function (User $id) {
 | Guest Routes
 |--------------------------------------------------------------------------
  */
-Route::get('/', 'PagesController@home');
+Route::view('/', 'quarx-frontend::pages.home');
 
 Route::get('/dashboard', function () {
     return Redirect::to('/');

@@ -23,6 +23,6 @@
   "dependencies": {
     "ioredis": "^3.2.2",
     "peer": "^0.2.8",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.4.0"
   }
 }
